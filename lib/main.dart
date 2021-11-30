@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'form/vidio.dart';
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -49,7 +48,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -98,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+						Video(key:UniqueKey()),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
