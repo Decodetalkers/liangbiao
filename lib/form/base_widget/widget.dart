@@ -1,3 +1,5 @@
-abstract class BaseWidget {
-	int score();
+import 'package:flutter/material.dart';
+
+abstract class BaseWidget implements Widget{
+	int? score();
 }

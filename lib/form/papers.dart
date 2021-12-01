@@ -1,4 +1,5 @@
 import 'base_widget/widget.dart';
+export 'base_widget/widget.dart';
 import 'package:flutter/material.dart';
 typedef VideoPaperKey = GlobalKey<_VideoPaperState>;
 class VideoPaper extends StatefulWidget implements BaseWidget {
@@ -7,14 +8,14 @@ class VideoPaper extends StatefulWidget implements BaseWidget {
 		_key = key;
 	}
 	@override
-	int score() {
-		_key.toString();
-		return 0;
+	int? score() {
+		return _key.currentState?.a;
 	}
 	@override
 	State<VideoPaper> createState() => _VideoPaperState();
 }
 class _VideoPaperState extends State<VideoPaper> {
+	int a = 2;
 	@override
 	Widget build(BuildContext context) {
 		return const Text("ssss");
@@ -27,9 +28,9 @@ class TextPaper extends StatefulWidget implements BaseWidget {
 		_key = key;
 	}
 	@override
-	int score() {
+	int? score() {
 		_key.toString();
-		return 0;
+		return 2;
 	}
 	@override
 	State<TextPaper> createState() => _TextPaperState();
