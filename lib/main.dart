@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'form/vidio.dart';
+import 'form/papers.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-						Video(key:UniqueKey()),
+						VideoPaper(key:GlobalKey()),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
