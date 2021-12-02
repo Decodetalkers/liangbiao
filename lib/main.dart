@@ -46,9 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     for (final url in widget.urls) {
       if (url is VideoUrl) {
-        inside.add(VideoPaper(key: GlobalKey(), url: url.geturl()));
+        inside.add(videopaper(url: url.geturl()));
       } else {
-        inside.add(TextPaper(key: GlobalKey(), url: url.geturl()));
+        inside.add(textpaper(url: url.geturl()));
       }
     }
   }

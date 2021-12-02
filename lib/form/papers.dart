@@ -2,12 +2,12 @@ import 'base_widget/widget.dart';
 export 'base_widget/widget.dart';
 import 'package:flutter/material.dart';
 
-typedef VideoPaperKey = GlobalKey<_VideoPaperState>;
+typedef _VideoPaperKey = GlobalKey<_VideoPaperState>;
 
-class VideoPaper extends StatefulWidget implements BaseWidget {
-  late final VideoPaperKey _key;
+class _VideoPaper extends StatefulWidget implements BaseWidget {
+  late final _VideoPaperKey _key;
   late final String _url;
-  VideoPaper({required VideoPaperKey key, required String url})
+  _VideoPaper({required _VideoPaperKey key, required String url})
       : super(key: key) {
     _key = key;
     _url = url;
@@ -18,11 +18,11 @@ class VideoPaper extends StatefulWidget implements BaseWidget {
   }
 
   @override
-  State<VideoPaper> createState() => _VideoPaperState();
+  State<_VideoPaper> createState() => _VideoPaperState();
 }
 
-class _VideoPaperState extends State<VideoPaper> {
-  int a = 2;
+class _VideoPaperState extends State<_VideoPaper> {
+  int a = 4;
   late final String url;
   @override
   void initState() {
@@ -44,13 +44,13 @@ class VideoUrl implements FromUrl {
     return url;
   }
 }
+_VideoPaper videopaper({required String url}) => _VideoPaper(key: GlobalKey(),url: url);
+typedef _TextPaperKey = GlobalKey<_TextPaperState>;
 
-typedef TextPaperKey = GlobalKey<_TextPaperState>;
-
-class TextPaper extends StatefulWidget implements BaseWidget {
-  late final TextPaperKey _key;
+class _TextPaper extends StatefulWidget implements BaseWidget {
+  late final _TextPaperKey _key;
   late final String _url;
-  TextPaper({required TextPaperKey key, required String url})
+  _TextPaper({required _TextPaperKey key, required String url})
       : super(key: key) {
     _key = key;
     _url = url;
@@ -62,10 +62,11 @@ class TextPaper extends StatefulWidget implements BaseWidget {
   }
 
   @override
-  State<TextPaper> createState() => _TextPaperState();
+  State<_TextPaper> createState() => _TextPaperState();
 }
 
-class _TextPaperState extends State<TextPaper> {
+
+class _TextPaperState extends State<_TextPaper> {
   late final String url;
   @override
   void initState() {
@@ -79,6 +80,7 @@ class _TextPaperState extends State<TextPaper> {
   }
 }
 
+_TextPaper textpaper({required String url}) => _TextPaper(key: GlobalKey(),url: url);
 class TextUrl implements FromUrl {
   final String url;
   const TextUrl(this.url);
