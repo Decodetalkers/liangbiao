@@ -28,7 +28,7 @@ class _VideoPaperState extends State<_VideoPaper> {
   late VideoPlayerController _controller;
   late final String url;
   IconData playstate = Icons.play_arrow;
-	final selects = ["A","B","C","D"];
+  final selects = ["A", "B", "C", "D"];
   @override
   void initState() {
     super.initState();
@@ -67,24 +67,23 @@ class _VideoPaperState extends State<_VideoPaper> {
           },
         ),
       ]),
-			Row(
-			mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-			children: selects
-				.asMap()
-				.map((i,item) => MapEntry(
-					i,
-					Checkbox(
-						value: i==select,
-						onChanged: (val){
-							setState(() {
-							  select = i;
-							});
-						},
-					)
-				))
-				.values
-				.toList(),
-			)
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: selects
+            .asMap()
+            .map((i, item) => MapEntry(
+                i,
+                Checkbox(
+                  value: i == select,
+                  onChanged: (val) {
+                    setState(() {
+                      select = i;
+                    });
+                  },
+                )))
+            .values
+            .toList(),
+      )
     ]);
   }
 }
