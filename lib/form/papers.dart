@@ -26,6 +26,7 @@ class _VideoPaperState extends State<_VideoPaper> {
   int a = 4;
   late VideoPlayerController _controller;
   late final String url;
+  IconData playstate = Icons.play_arrow;
   @override
   void initState() {
     super.initState();
@@ -41,12 +42,30 @@ class _VideoPaperState extends State<_VideoPaper> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: _controller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
-              )
-            : Container());
+        child: Stack(alignment: Alignment.bottomCenter, children: <Widget>[
+      _controller.value.isInitialized
+          ? AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+          : Container(),
+      VideoProgressIndicator(_controller, allowScrubbing: true),
+      ClosedCaption(text: _controller.value.caption.text),
+      IconButton(
+        icon: Icon(playstate),
+        onPressed: () {
+          setState(() {
+            if (_controller.value.isPlaying) {
+              _controller.pause();
+              playstate = Icons.play_arrow;
+            } else {
+              _controller.play();
+              playstate = Icons.stop;
+            }
+          });
+        },
+      ),
+    ]));
   }
 }
 
