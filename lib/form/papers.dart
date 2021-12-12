@@ -24,15 +24,16 @@ class _VideoPaper extends StatefulWidget implements BaseWidget {
 
 class _VideoPaperState extends State<_VideoPaper> {
   int a = 4;
+  int? select;
   late VideoPlayerController _controller;
   late final String url;
   IconData playstate = Icons.play_arrow;
+	final selects = ["A","B","C","D"];
   @override
   void initState() {
     super.initState();
     url = widget._url;
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+    _controller = VideoPlayerController.network(url)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -41,31 +42,50 @@ class _VideoPaperState extends State<_VideoPaper> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Stack(alignment: Alignment.bottomCenter, children: <Widget>[
-      _controller.value.isInitialized
-          ? AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
-          : Container(),
-      VideoProgressIndicator(_controller, allowScrubbing: true),
-      ClosedCaption(text: _controller.value.caption.text),
-      IconButton(
-        icon: Icon(playstate),
-        onPressed: () {
-          setState(() {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-              playstate = Icons.play_arrow;
-            } else {
-              _controller.play();
-              playstate = Icons.stop;
-            }
-          });
-        },
-      ),
-    ]));
+    return Column(children: [
+      Stack(alignment: Alignment.bottomCenter, children: <Widget>[
+        _controller.value.isInitialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+            : Container(),
+        VideoProgressIndicator(_controller, allowScrubbing: true),
+        ClosedCaption(text: _controller.value.caption.text),
+        IconButton(
+          icon: Icon(playstate),
+          onPressed: () {
+            setState(() {
+              if (_controller.value.isPlaying) {
+                _controller.pause();
+                playstate = Icons.play_arrow;
+              } else {
+                _controller.play();
+                playstate = Icons.stop;
+              }
+            });
+          },
+        ),
+      ]),
+			Row(
+			mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+			children: selects
+				.asMap()
+				.map((i,item) => MapEntry(
+					i,
+					Checkbox(
+						value: i==select,
+						onChanged: (val){
+							setState(() {
+							  select = i;
+							});
+						},
+					)
+				))
+				.values
+				.toList(),
+			)
+    ]);
   }
 }
 

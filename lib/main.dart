@@ -18,8 +18,10 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(
         title: 'Flutter Demo Home Page',
         urls: [
-          VideoUrl("sssss"),
-          VideoUrl("ttttt"),
+          VideoUrl(
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+          VideoUrl(
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
           TextUrl("aaaaa"),
           TextUrl("bbbbb"),
         ],
