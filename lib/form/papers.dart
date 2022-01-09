@@ -23,7 +23,7 @@ class _VideoPaper extends StatefulWidget implements BaseWidget {
 }
 
 class _VideoPaperState extends State<_VideoPaper> {
-  int a = 4;
+  int a = 0;
   int? select;
   late VideoPlayerController _controller;
   late final String url;
@@ -78,6 +78,7 @@ class _VideoPaperState extends State<_VideoPaper> {
                   onChanged: (val) {
                     setState(() {
                       select = i;
+                      a = i;
                     });
                   },
                 )))
@@ -111,8 +112,7 @@ class _TextPaper extends StatefulWidget implements BaseWidget {
   }
   @override
   int? score() {
-    _key.toString();
-    return 2;
+    return _key.currentState?.a;
   }
 
   @override
@@ -121,6 +121,9 @@ class _TextPaper extends StatefulWidget implements BaseWidget {
 
 class _TextPaperState extends State<_TextPaper> {
   late final String url;
+  int a = 0;
+  int? select;
+  final selects = ["A", "B", "C", "D"];
   @override
   void initState() {
     super.initState();
@@ -129,7 +132,30 @@ class _TextPaperState extends State<_TextPaper> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(url);
+    //return Text(url);
+    return Column(
+      children: [
+        Text(url),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: selects
+              .asMap()
+              .map((i, item) => MapEntry(
+                  i,
+                  Checkbox(
+                    value: i == select,
+                    onChanged: (val) {
+                      setState(() {
+                        select = i;
+                        a = i;
+                      });
+                    },
+                  )))
+              .values
+              .toList(),
+        )
+      ],
+    );
   }
 }
 
