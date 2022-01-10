@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'form/papers.dart';
 import 'base_table.dart';
+import 'personpage.dart';
 import 'package:quiver/iterables.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   final titles = ["量表一", "量表二", "量表三", "量表四"];
-  final times = ["2022.1.10", "2022.1.20", "2022.1.30","2022.1.31"];
+  final times = ["2022.1.10", "2022.1.20", "2022.1.30", "2022.1.31"];
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -34,6 +35,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late List<String> titles;
   late List<String> times;
+  int _index = 0;
   @override
   void initState() {
     super.initState();
@@ -51,43 +53,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var mainpage = RefreshIndicator(
+        child: ListView(
+            children: zip([titles, times])
+                .map((e) => HomePageButton(
+                      text: e[0],
+                      date: e[1],
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BaseTable(
+                                    title: 'Table',
+                                    urls: [
+                                      VideoUrl(
+                                          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+                                      VideoUrl(
+                                          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+                                      TextUrl("aaaaa"),
+                                      TextUrl("bbbbb"),
+                                    ],
+                                  )),
+                        );
+                      },
+                    ))
+                .toList()),
+        onRefresh: _handrefresh);
+    List<Widget> appages = [mainpage, const PersonPage()];
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
       ),
-      body: RefreshIndicator(
-          child: ListView(
-              children: zip([titles, times])
-                  .map((e) => HomePageButton(
-                        text: e[0],
-                        date: e[1],
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BaseTable(
-                                      title: 'Table',
-                                      urls: [
-                                        VideoUrl(
-                                            'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-                                        VideoUrl(
-                                            'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-                                        TextUrl("aaaaa"),
-                                        TextUrl("bbbbb"),
-                                      ],
-                                    )),
-                          );
-                        },
-                      ))
-                  .toList()),
-          onRefresh: _handrefresh),
+      body: appages[_index],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
           BottomNavigationBarItem(icon: Icon(Icons.pages), label: '设置'),
         ],
-        currentIndex: 0,
+        currentIndex: _index,
         fixedColor: Colors.blue,
+        onTap: (int index) {
+          setState(() {
+            _index = index;
+          });
+        },
       ),
     );
   }
@@ -137,7 +146,7 @@ class _HomePageButtonState extends State<HomePageButton> {
           _inchangeColor();
           widget.onPressed();
         },
-				onTapCancel: _inchangeColor,
+        onTapCancel: _inchangeColor,
         child: RichText(
           text: TextSpan(children: [
             TextSpan(
