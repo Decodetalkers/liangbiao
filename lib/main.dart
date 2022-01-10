@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   final titles = ["量表一", "量表二", "量表三", "量表四"];
-  final times = ["2022.1.10", "2022.1.20", "2022.1.30"];
+  final times = ["2022.1.10", "2022.1.20", "2022.1.30","2022.1.31"];
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
       titles = titles.reversed.toList();
+      times = times.reversed.toList();
     });
   }
 
@@ -129,13 +130,14 @@ class _HomePageButtonState extends State<HomePageButton> {
         border: Border.all(width: 30, color: color),
       ),
       child: GestureDetector(
-        onTapDown: (d) {
+        onTapDown: (_infomation) {
           _inchangeColor();
         },
-        onTapUp: (d) {
+        onTapUp: (_infomation) {
           _inchangeColor();
           widget.onPressed();
         },
+				onTapCancel: _inchangeColor,
         child: RichText(
           text: TextSpan(children: [
             TextSpan(

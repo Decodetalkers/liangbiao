@@ -75,14 +75,14 @@ class _BaseTableState extends State<BaseTable> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: '设置'),
-        ],
-        currentIndex: 0,
-        fixedColor: Colors.blue,
-      ),
+      //bottomNavigationBar: BottomNavigationBar(
+      //  items: const <BottomNavigationBarItem>[
+      //    BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+      //    BottomNavigationBarItem(icon: Icon(Icons.pages), label: '设置'),
+      //  ],
+      //  currentIndex: 0,
+      //  fixedColor: Colors.blue,
+      //),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
