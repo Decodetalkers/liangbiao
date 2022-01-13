@@ -36,6 +36,9 @@ class _HomePageState extends State<HomePage> {
   late List<String> titles;
   late List<String> times;
   int _index = 0;
+  List<Widget> mainpages = [const PersonPage()];
+  int _mainpageindex = 1;
+  bool _showbottomsheet = true;
   @override
   void initState() {
     super.initState();
@@ -49,6 +52,34 @@ class _HomePageState extends State<HomePage> {
       titles = titles.reversed.toList();
       times = times.reversed.toList();
     });
+  }
+
+  Widget? _showBottomSheet() {
+    if (_showbottomsheet) {
+      return Container(
+        height: 200,
+        color: Colors.amber,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Text('Modal BottomSheet'),
+              ElevatedButton(
+                child: const Text('Close BottomSheet'),
+                onPressed: () {
+                  setState(() {
+                    _showbottomsheet = false;
+                  });
+                },
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -79,7 +110,9 @@ class _HomePageState extends State<HomePage> {
                     ))
                 .toList()),
         onRefresh: _handrefresh);
-    List<Widget> appages = [mainpage, const PersonPage()];
+    mainpages.add(mainpage);
+
+    List<Widget> appages = [mainpages[_mainpageindex], const PersonPage()];
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
@@ -97,6 +130,41 @@ class _HomePageState extends State<HomePage> {
             _index = index;
           });
         },
+      ),
+      bottomSheet: _showBottomSheet(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if (_mainpageindex == 0) {
+              _mainpageindex = 1;
+            } else {
+              _mainpageindex = 0;
+            }
+          });
+          //showModalBottomSheet<void>(
+          //    context: context,
+          //    builder: (BuildContext context) {
+          //      return Container(
+          //        height: 200,
+          //        color: Colors.amber,
+          //        child: Center(
+          //          child: Column(
+          //            mainAxisAlignment: MainAxisAlignment.center,
+          //            mainAxisSize: MainAxisSize.min,
+          //            children: <Widget>[
+          //              const Text('Modal BottomSheet'),
+          //              ElevatedButton(
+          //                child: const Text('Close BottomSheet'),
+          //                onPressed: () => Navigator.pop(context),
+          //              )
+          //            ],
+          //          ),
+          //        ),
+          //      );
+          //    });
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
