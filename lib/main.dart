@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:liangbiao/loginpage.dart';
 import 'personpage.dart';
 import 'student.dart';
+import 'persionmessage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,11 +36,13 @@ class _HomePageState extends State<HomePage> {
   late List<String> titles;
   late List<String> times;
   int _index = 0;
+  // This is the page of the first page, If you are a student , It will be the first one, else, second one
   late List<Widget?> mainpages;
   Widget? personpage;
   int _mainpageindex = 0;
   bool _logined = false;
-  User loginer = User.other;
+  final List<String> _magename = ["主页", "设置"];
+  User? loginer;
   @override
   void initState() {
     super.initState();
@@ -49,9 +53,34 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    void _navigateAndDisplaySelection(BuildContext context) async {
+      // Navigator.push returns a Future that completes after calling
+      // Navigator.pop on the Selection Screen.
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+      if (result != null) {
+        result as Message;
+        setState(() {
+          _logined = true;
+          _index = 1;
+          if (result.person == User.student) {
+            loginer = User.student;
+            mainpages[1] = const StudentPersonPage();
+            personpage = const StudentPersonPage();
+          } else {
+            loginer = User.teacher;
+            mainpages[1] = const TeacherPersonPage();
+            personpage = const TeacherPersonPage();
+          }
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('量表'),
+        title: Text(_magename[_index]),
         actions: [
           if (_logined == true)
             Padding(
@@ -76,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                                         setState(() {
                                           _logined = false;
                                           _index = 0;
-                                          loginer = User.other;
+                                          loginer = null;
                                           mainpages[1] = null;
                                           personpage = null;
                                         });
@@ -124,29 +153,11 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           const Text('Modal BottomSheet'),
                           ElevatedButton(
-                              child: const Text('Student'),
+                              child: const Text('登陆'),
                               onPressed: () {
-                                setState(() {
-                                  _logined = true;
-                                  _index = 1;
-                                  loginer = User.student;
-                                  mainpages[1] = const StudentPersonPage();
-                                  personpage = const StudentPersonPage();
-                                });
                                 Navigator.pop(context);
+                                _navigateAndDisplaySelection(context);
                               }),
-                          ElevatedButton(
-                              child: const Text('Teacher'),
-                              onPressed: () {
-                                setState(() {
-                                  _logined = true;
-                                  _index = 1;
-                                  loginer = User.teacher;
-                                  mainpages[1] = const TeacherPersonPage();
-                                  personpage = const TeacherPersonPage();
-                                });
-                                Navigator.pop(context);
-                              })
                         ],
                       ),
                     ),

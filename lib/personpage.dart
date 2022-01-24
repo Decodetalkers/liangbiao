@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-enum User {
-  student,
-  teacher,
-  other,
-}
-
 class StudentPersonPage extends StatelessWidget {
   const StudentPersonPage({Key? key}) : super(key: key);
   @override
