@@ -67,12 +67,12 @@ class _HomePageState extends State<HomePage> {
           _index = 1;
           if (result.person == User.student) {
             loginer = User.student;
-            mainpages[1] = const StudentPersonPage();
-            personpage = const StudentPersonPage();
+            mainpages[1] = StudentPersonPage(id:result.id);
+            personpage = StudentPersonPage(id:result.id);
           } else {
             loginer = User.teacher;
-            mainpages[1] = const TeacherPersonPage();
-            personpage = const TeacherPersonPage();
+            mainpages[1] = TeacherPersonPage(id:result.id);
+            personpage = TeacherPersonPage(id:result.id);
           }
         });
       }
