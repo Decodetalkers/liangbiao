@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StudentPersonPage extends StatelessWidget {
-	final String id;
-  const StudentPersonPage({Key? key,required this.id}) : super(key: key);
+  final String id;
+  const StudentPersonPage({Key? key, required this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -33,7 +33,7 @@ class StudentPersonPage extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-								id,
+                id,
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: const Text('My City, CA 99984'),
@@ -68,8 +68,8 @@ class StudentPersonPage extends StatelessWidget {
 }
 
 class TeacherPersonPage extends StatelessWidget {
-	final String id;
-  const TeacherPersonPage({Key? key,required this.id}) : super(key: key);
+  final String id;
+  const TeacherPersonPage({Key? key, required this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -99,8 +99,8 @@ class TeacherPersonPage extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title:  Text(
-								id,
+              title: Text(
+                id,
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: const Text('My City, CA 99984'),

@@ -66,13 +66,15 @@ class _HomePageState extends State<HomePage> {
           _logined = true;
           _index = 1;
           if (result.person == User.student) {
+            _mainpageindex = 0;
             loginer = User.student;
-            mainpages[1] = StudentPersonPage(id:result.id);
-            personpage = StudentPersonPage(id:result.id);
+            mainpages[1] = StudentPersonPage(id: result.id);
+            personpage = StudentPersonPage(id: result.id);
           } else {
+            _mainpageindex = 1;
             loginer = User.teacher;
-            mainpages[1] = TeacherPersonPage(id:result.id);
-            personpage = TeacherPersonPage(id:result.id);
+            mainpages[1] = TeacherPersonPage(id: result.id);
+            personpage = TeacherPersonPage(id: result.id);
           }
         });
       }
@@ -103,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                                       child: const Text('sure'),
                                       onPressed: () {
                                         setState(() {
+                                          _mainpageindex = 0;
                                           _logined = false;
                                           _index = 0;
                                           loginer = null;
@@ -122,8 +125,42 @@ class _HomePageState extends State<HomePage> {
                           );
                         });
                   },
-                  child: const Icon(Icons.exit_to_app),
-                )),
+                  child: const Icon(Icons.logout),
+                ))
+          else
+            Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 200,
+                            color: Colors.amber,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Text('Modal BottomSheet'),
+                                  ElevatedButton(
+                                      child: const Text('登陆'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        _navigateAndDisplaySelection(context);
+                                      }),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: Row(children: const [
+                    Icon(Icons.login),
+                    Text("登陸"),
+                  ]),
+                ))
         ],
       ),
       body: [mainpages[_mainpageindex], personpage][_index],
@@ -135,7 +172,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _index,
         fixedColor: Colors.blue,
         onTap: (int index) {
-          if (_logined == true || index == 0) {
+          if (_logined == true) {
             setState(() {
               _index = index;
             });
@@ -167,19 +204,19 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       //bottomSheet: _showBottomSheet(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            if (_mainpageindex == 0) {
-              _mainpageindex = 1;
-            } else {
-              _mainpageindex = 0;
-            }
-          });
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      //floatingActionButton: FloatingActionButton(
+      //  onPressed: () {
+      //    setState(() {
+      //      if (_mainpageindex == 0) {
+      //        _mainpageindex = 1;
+      //      } else {
+      //        _mainpageindex = 0;
+      //      }
+      //    });
+      //  },
+      //  tooltip: 'Increment',
+      //  child: const Icon(Icons.add),
+      //),
     );
   }
 }

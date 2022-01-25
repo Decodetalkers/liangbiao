@@ -16,110 +16,130 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    // tabs location
     List<Widget> tabs = <Widget>[
-
-      ListView(
-        //  mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ExpansionTile(
-            title: const Text("用戶"),
-            children: [
-              ["Teacher", User.teacher],
-              ["student", User.student]
-            ].map((e) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      Column(children: [
+        // for scroll
+        Expanded(
+          child: ListView(
+            //  mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ExpansionTile(
+                title: () {
+                  if (dropdownValue == null) {
+                    return const Text("用戶");
+                  } else if (dropdownValue == User.student) {
+                    return const Text("學生");
+                  } else {
+                    return const Text("老師");
+                  }
+                }(),
                 children: [
-                  Text(e[0].toString()),
-                  Checkbox(
-                      value: e[1] == dropdownValue,
-                      onChanged: (value) {
-                        if (value == true) {
-                          setState(() {
-                            var temp = e[1];
-                            temp as User;
-                            dropdownValue = temp;
-                          });
-                        }
-                      })
-                ],
-              );
-            }).toList(),
-          ),
-          if (dropdownValue == User.student) ...[
-            Form(
-              key: _formKey1,
-              child: TextFormField(
-                controller: idController,
-                decoration: const InputDecoration(hintText: 'Hello student'),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "enter text";
-                  }
-                  return null;
-                },
+                  ["Teacher", User.teacher],
+                  ["student", User.student]
+                ].map((e) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(e[0].toString()),
+                      Checkbox(
+                          value: e[1] == dropdownValue,
+                          onChanged: (value) {
+                            if (value == true) {
+                              setState(() {
+                                var temp = e[1];
+                                temp as User;
+                                dropdownValue = temp;
+                              });
+                            }
+                          })
+                    ],
+                  );
+                }).toList(),
               ),
-            ),
-            Form(
-                key: _formKey2,
-                child: TextFormField(
-                  controller: passwardController,
-                  decoration: const InputDecoration(hintText: 'Enter Passward'),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "enter passward";
-                    }
-                    return null;
-                  },
-                )),
-          ] else if (dropdownValue == User.teacher) ...[
-            Form(
-              key: _formKey1,
-              child: TextFormField(
-                controller: idController,
-                decoration: const InputDecoration(hintText: 'Hello Teacher'),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return "No teacher";
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Form(
-                key: _formKey2,
-                child: TextFormField(
-                  controller: passwardController,
-                  decoration: const InputDecoration(hintText: 'Enter Passward'),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "enter passward";
-                    }
-                    return null;
-                  },
-                ))
-          ] else
-            ...[],
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: (dropdownValue == null)
-                  ? null
-                  : () {
-                      if (_formKey1.currentState!.validate() &&
-                          _formKey2.currentState!.validate()) {
-                        if (dropdownValue != null) {
-                          // Close the screen and return "Yep!" as the result.
-                          Navigator.pop(context,
-                              Message(person: dropdownValue!, id: idController.text));
-                        }
+              if (dropdownValue == User.student) ...[
+                Form(
+                  key: _formKey1,
+                  child: TextFormField(
+                    controller: idController,
+                    decoration:
+                        const InputDecoration(hintText: 'Hello student'),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return "enter text";
                       }
+                      return null;
                     },
-              child: const Text('Confirm'),
-            ),
+                  ),
+                ),
+                Form(
+                    key: _formKey2,
+                    child: TextFormField(
+                      controller: passwardController,
+                      decoration:
+                          const InputDecoration(hintText: 'Enter Passward'),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "enter passward";
+                        }
+                        return null;
+                      },
+                    )),
+              ] else if (dropdownValue == User.teacher) ...[
+                Form(
+                  key: _formKey1,
+                  child: TextFormField(
+                    controller: idController,
+                    decoration:
+                        const InputDecoration(hintText: 'Hello Teacher'),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return "No teacher";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Form(
+                    key: _formKey2,
+                    child: TextFormField(
+                      controller: passwardController,
+                      decoration:
+                          const InputDecoration(hintText: 'Enter Passward'),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "enter passward";
+                        }
+                        return null;
+                      },
+                    ))
+              ] else
+                ...[],
+            ],
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: (dropdownValue == null)
+                ? null
+                : () {
+                    if (_formKey1.currentState!.validate() &&
+                        _formKey2.currentState!.validate()) {
+                      if (dropdownValue != null) {
+                        // Close the screen and return "Yep!" as the result.
+                        Navigator.pop(
+                            context,
+                            Message(
+                                person: dropdownValue!, id: idController.text));
+                      }
+                    }
+                  },
+            child: const Text('Confirm'),
+          ),
+        ),
+        const SizedBox(height: 20),
+      ]),
       ListView(
         //  mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
