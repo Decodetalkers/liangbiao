@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'persionmessage.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,10 +12,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   //const LoginPage({Key? key}) : super(key: key);
   User? dropdownValue;
+  Logintype? howlogin;
+  String? passward;
   TextEditingController idController = TextEditingController();
+  TextEditingController subidController = TextEditingController();
   TextEditingController passwardController = TextEditingController();
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _subformKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _subformKey2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     // tabs location
@@ -75,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                 Form(
                     key: _formKey2,
                     child: TextFormField(
+                      obscureText: true,
                       controller: passwardController,
                       decoration:
                           const InputDecoration(hintText: 'Enter Passward'),
@@ -104,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     key: _formKey2,
                     child: TextFormField(
                       controller: passwardController,
+                      obscureText: true,
                       decoration:
                           const InputDecoration(hintText: 'Enter Passward'),
                       validator: (String? value) {
@@ -140,64 +149,157 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 20),
       ]),
-      ListView(
-        //  mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(children: [
-            const Expanded(child: Text("hello")),
-            DropdownButton<User>(
-              value: dropdownValue,
-              icon: const Icon(Icons.arrow_downward),
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
+      Column(children: [
+        Expanded(
+          child: ListView(
+            //  mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ExpansionTile(
+                title: () {
+                  if (howlogin == null) {
+                    return const Text("選擇註冊方式");
+                  } else if (howlogin == Logintype.email) {
+                    return const Text("郵件");
+                  } else {
+                    return const Text("匿名");
+                  }
+                }(),
+                children: [
+                  ["郵件", Logintype.email],
+                  ["匿名", Logintype.anonymous]
+                ].map((e) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(e[0].toString()),
+                      Checkbox(
+                          value: e[1] == howlogin,
+                          onChanged: (value) {
+                            if (value == true) {
+                              setState(() {
+                                var temp = e[1];
+                                temp as Logintype;
+                                howlogin = temp;
+                              });
+                            }
+                          })
+                    ],
+                  );
+                }).toList(),
               ),
-              onChanged: (User? newValue) {
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              },
-              items: <User>[User.student, User.teacher]
-                  .map<DropdownMenuItem<User>>((User value) {
-                String text;
-                if (value == User.student) {
-                  text = "Student";
-                } else {
-                  text = "Teacher";
-                }
-                return DropdownMenuItem<User>(
-                  value: value,
-                  child: Text(text),
-                );
-              }).toList(),
-            ),
-          ]),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Close the screen and return "Yep!" as the result.
-                Navigator.pop(
-                    context, Message(person: User.student, id: "Student"));
-              },
-              child: const Text('Student'),
-            ),
+              if (howlogin == Logintype.anonymous) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: Form(
+                        key: _subformKey1,
+                        child: TextFormField(
+                          controller: subidController,
+                          decoration:
+                              const InputDecoration(hintText: 'Enter a name'),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "enter text";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          var time = DateTime.now().toString();
+                          var bytes = utf8.encode(time);
+                          var digest = sha1.convert(bytes).toString();
+                          subidController.text = digest;
+                        },
+                        child: const Text("隨機生成id")),
+                  ],
+                ),
+                Form(
+                    autovalidateMode: AutovalidateMode.always,
+                    onChanged: () {
+                      Form.of(primaryFocus!.context!)!.save();
+                    },
+                    child: TextFormField(
+                      //controller: passwardController,
+                      obscureText: true,
+                      decoration:
+                          const InputDecoration(hintText: 'Enter Passward'),
+                      onSaved: (String? value) {
+                        setState(() {
+                          passward = value;
+                        });
+                      },
+                    )),
+                Form(
+                    key: _subformKey2,
+                    child: TextFormField(
+                      //controller: passwardController,
+                      obscureText: true,
+                      decoration:
+                          const InputDecoration(hintText: 'Confirm Passward'),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "enter passward";
+                        } else if (value != passward) {
+                          return "not the same passward";
+                        }
+                        return null;
+                      },
+                    ))
+              ] else if (howlogin == Logintype.email)
+                ...[]
+              else
+                ...[],
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Close the screen and return "Nope." as the result.
-                Navigator.pop(
-                    context, Message(person: User.teacher, id: "Teacher"));
-              },
-              child: const Text('Teacher'),
-            ),
-          )
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: (howlogin == null)
+                ? null
+                : () {
+                    if (_subformKey1.currentState!.validate() &&
+                        _subformKey2.currentState!.validate()) {
+                      showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 200,
+                              color: Colors.amber,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text('Your id is ${subidController.text}'),
+                                    const Text('please remember your passward'),
+                                    ElevatedButton(
+                                        child: const Text('登陸'),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(
+                                              context,
+                                              Message(
+                                                  person: User.student,
+                                                  id: subidController.text));
+                                        }),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+
+                      // Close the screen and return "Yep!" as the result.
+                    }
+                  },
+            child: const Text('Student'),
+          ),
+        ),
+        const SizedBox(height: 20),
+      ])
     ];
     return DefaultTabController(
         length: 2,

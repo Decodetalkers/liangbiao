@@ -2,6 +2,10 @@ enum User {
   student,
   teacher,
 }
+enum Logintype {
+  anonymous,
+  email,
+}
 
 class Message {
   User person;
