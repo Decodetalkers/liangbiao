@@ -2,11 +2,40 @@ import 'package:flutter/material.dart';
 import 'persionmessage.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
   State<LoginPage> createState() => _LoginPageState();
+}
+
+Future<http.Response> logininto(String name, String passward) {
+  return http.post(
+    Uri.parse("http://127.0.0.1:3000/login"),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'X-CUSTOM-HEADER': '123',
+      'Access-Control-Allow-Origin': 'http://localhost:37703'
+    },
+    body: jsonEncode({
+      'name': name,
+      'passward': passward,
+    }),
+  );
+}
+
+Future<http.Response> registerinto(String name, String passward) {
+  return http.post(
+    Uri.parse("http://127.0.0.1:3000/register"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      'name': name,
+      'passward': passward,
+    }),
+  );
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -17,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController idController = TextEditingController();
   TextEditingController subidController = TextEditingController();
   TextEditingController passwardController = TextEditingController();
+  TextEditingController subpasswardController = TextEditingController();
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _subformKey1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
@@ -132,15 +162,21 @@ class _LoginPageState extends State<LoginPage> {
           child: ElevatedButton(
             onPressed: (dropdownValue == null)
                 ? null
-                : () {
+                : () async {
                     if (_formKey1.currentState!.validate() &&
                         _formKey2.currentState!.validate()) {
                       if (dropdownValue != null) {
-                        // Close the screen and return "Yep!" as the result.
-                        Navigator.pop(
-                            context,
-                            Message(
-                                person: dropdownValue!, id: idController.text));
+                        var logined = await logininto(
+                            idController.text, passwardController.text);
+                        var login = jsonDecode(logined.body);
+                        if (login["logined"] == true) {
+                          // Close the screen and return "Yep!" as the result.
+                          Navigator.pop(
+                              context,
+                              Message(
+                                  person: dropdownValue!,
+                                  id: login["message"]["icon"]));
+                        }
                       }
                     }
                   },
@@ -222,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                       Form.of(primaryFocus!.context!)!.save();
                     },
                     child: TextFormField(
-                      //controller: passwardController,
+                      controller: subpasswardController,
                       obscureText: true,
                       decoration:
                           const InputDecoration(hintText: 'Enter Passward'),
@@ -260,37 +296,44 @@ class _LoginPageState extends State<LoginPage> {
           child: ElevatedButton(
             onPressed: (howlogin == null)
                 ? null
-                : () {
+                : () async {
                     if (_subformKey1.currentState!.validate() &&
                         _subformKey2.currentState!.validate()) {
-                      showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              height: 200,
-                              color: Colors.amber,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text('Your id is ${subidController.text}'),
-                                    const Text('please remember your passward'),
-                                    ElevatedButton(
-                                        child: const Text('登陸'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          Navigator.pop(
-                                              context,
-                                              Message(
-                                                  person: User.student,
-                                                  id: subidController.text));
-                                        }),
-                                  ],
+                      var logined = await registerinto(
+                          subidController.text, subpasswardController.text);
+                      var login = jsonDecode(logined.body);
+                      if (login["logined"] == true) {
+                        showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: 200,
+                                color: Colors.amber,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(
+                                          'Your id is ${subidController.text}'),
+                                      const Text(
+                                          'please remember your passward'),
+                                      ElevatedButton(
+                                          child: const Text('登陸'),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.pop(
+                                                context,
+                                                Message(
+                                                    person: User.student,
+                                                    id: subidController.text));
+                                          }),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          });
+                              );
+                            });
+                      }
 
                       // Close the screen and return "Yep!" as the result.
                     }
