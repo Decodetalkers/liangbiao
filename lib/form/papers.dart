@@ -170,3 +170,71 @@ class TextUrl implements FromUrl {
     return url;
   }
 }
+typedef _ImagePaperKey = GlobalKey<_ImagePaperState>;
+class _ImagePaper extends StatefulWidget implements BaseWidget {
+  late final _ImagePaperKey _key;
+  late final String _url;
+  _ImagePaper({required _ImagePaperKey key, required String url})
+      : super(key: key) {
+    _key = key;
+    _url = url;
+  }
+  @override
+  int? score() {
+    return _key.currentState?.a;
+  }
+
+  @override
+  State<_ImagePaper> createState() => _ImagePaperState();
+}
+class _ImagePaperState extends State<_ImagePaper> {
+  late final String url;
+  int a = 0;
+  int? select;
+  final selects = ["A", "B", "C", "D"];
+  @override
+  void initState() {
+    super.initState();
+    url = widget._url;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //return Text(url);
+    return Column(
+      children: [
+        Image.network(url),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: selects
+              .asMap()
+              .map((i, item) => MapEntry(
+                  i,
+                  Checkbox(
+                    value: i == select,
+                    onChanged: (val) {
+                      setState(() {
+                        select = i;
+                        a = i;
+                      });
+                    },
+                  )))
+              .values
+              .toList(),
+        )
+      ],
+    );
+  }
+}
+
+_ImagePaper imagepaper({required String url}) =>
+    _ImagePaper(key: GlobalKey(), url: url);
+
+class ImageUrl implements FromUrl {
+  final String url;
+  const ImageUrl(this.url);
+  @override
+  String geturl() {
+    return url;
+  }
+}

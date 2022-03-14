@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'form/papers.dart';
 import 'base_table.dart';
 import 'package:quiver/iterables.dart';
-
+import 'http_get/get_menu.dart';
 class StudentPage extends StatefulWidget {
   final List<String> titles;
   final List<String> times;
@@ -40,23 +40,40 @@ class _StudentPageState extends State<StudentPage> {
                 .map((e) => HomePageButton(
                       text: e[0],
                       date: e[1],
-                      onPressed: () {
+                      onPressed: () async {
+												var output = await fetchMenu("http://localhost:3000/json/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD");
+												List<FromUrl> urls = [];
+												if(output != null) {
+													urls = output.map(
+														(e) {
+															if(e.filetype == "TXT"){
+																return const TextUrl( "test");
+															}else if(e.filetype == "Image") {
+																return ImageUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD\$${e.name}");
+															}else {
+																return VideoUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD\$${e.name}");
+															}
+														}
+													).toList();
+												}
                         //setState(() {
                         //  _showbottomsheet = false;
                         //});
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BaseTable(
+                              builder: (context) => BaseTable(
                                     title: 'Table',
-                                    urls: [
-                                      VideoUrl(
-                                          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-                                      VideoUrl(
-                                          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-                                      TextUrl("aaaaa"),
-                                      TextUrl("bbbbb"),
-                                    ],
+                                    urls: urls, 
+																		//[
+                                    //  VideoUrl(
+                                    //      'http://localhost:3000/image/MjAyMi0wMy0xNCAwODozMToyOC45ODc5MjExMjUgVVRD\$0.mp4'),
+                                    //  VideoUrl(
+                                    //      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+                                    //  TextUrl("aaaaa"),
+                                    //  TextUrl("bbbbb"),
+																		//	ImageUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAwODozMToyOC45ODc5MjExMjUgVVRD\$2.png"),
+                                    //],
                                   )),
                         );
                       },

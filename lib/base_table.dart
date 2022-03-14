@@ -34,9 +34,13 @@ class _BaseTableState extends State<BaseTable> {
     for (final url in widget.urls) {
       if (url is VideoUrl) {
         inside.add(videopaper(url: url.geturl()));
-      } else {
+      }
+			else if(url is TextUrl) {
         inside.add(textpaper(url: url.geturl()));
       }
+			else {
+        inside.add(imagepaper(url: url.geturl()));
+			}
     }
   }
 
