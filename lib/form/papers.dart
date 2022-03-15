@@ -170,7 +170,9 @@ class TextUrl implements FromUrl {
     return url;
   }
 }
+
 typedef _ImagePaperKey = GlobalKey<_ImagePaperState>;
+
 class _ImagePaper extends StatefulWidget implements BaseWidget {
   late final _ImagePaperKey _key;
   late final String _url;
@@ -187,6 +189,7 @@ class _ImagePaper extends StatefulWidget implements BaseWidget {
   @override
   State<_ImagePaper> createState() => _ImagePaperState();
 }
+
 class _ImagePaperState extends State<_ImagePaper> {
   late final String url;
   int a = 0;

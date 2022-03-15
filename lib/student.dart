@@ -3,6 +3,17 @@ import 'form/papers.dart';
 import 'base_table.dart';
 import 'package:quiver/iterables.dart';
 import 'http_get/get_menu.dart';
+import 'package:http/http.dart' as http;
+
+Future<String?> _fetchTxt(String url) async {
+  var menuget = await http.get(Uri.parse(url));
+  if (menuget.statusCode == 200) {
+    return menuget.body;
+  } else {
+    return null;
+  }
+}
+
 class StudentPage extends StatefulWidget {
   final List<String> titles;
   final List<String> times;
@@ -25,11 +36,15 @@ class _StudentPageState extends State<StudentPage> {
   }
 
   Future<void> _handrefresh() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      titles = titles.reversed.toList();
-      times = times.reversed.toList();
-    });
+    //await Future.delayed(const Duration(seconds: 2));
+    var output = await fetchFolds("http://localhost:3000/folds");
+
+    if (output != null) {
+      List<String> times2 = output.map((e) => e.id).toList();
+      setState(() {
+        times = times2;
+      });
+    }
   }
 
   @override
@@ -37,25 +52,37 @@ class _StudentPageState extends State<StudentPage> {
     return RefreshIndicator(
         child: ListView(
             children: zip([titles, times])
-                .map((e) => HomePageButton(
-                      text: e[0],
-                      date: e[1],
+                .map((message) => HomePageButton(
+                      text: message[0],
+                      date: message[1],
                       onPressed: () async {
-												var output = await fetchMenu("http://localhost:3000/json/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD");
-												List<FromUrl> urls = [];
-												if(output != null) {
-													urls = output.map(
-														(e) {
-															if(e.filetype == "TXT"){
-																return const TextUrl( "test");
-															}else if(e.filetype == "Image") {
-																return ImageUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD\$${e.name}");
-															}else {
-																return VideoUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD\$${e.name}");
-															}
-														}
-													).toList();
-												}
+                        var output = await fetchMenu(
+                            "http://localhost:3000/json/${message[1]}");
+                        List<FromUrl> urls = [];
+                        if (output != null) {
+                          for (var e in output) {
+                            var index = urls.length;
+                            if (e.filetype == "TXT") {
+                              var txt = await _fetchTxt(
+                                  "http://localhost:3000/txt/${message[1]}\$${e.name}");
+                              if (txt != null) {
+                                urls.insert(index, TextUrl(txt));
+                              } else {
+                                urls.insert(index, const TextUrl("Not fond"));
+                              }
+                            } else if (e.filetype == "Image") {
+                              urls.insert(
+                                  index,
+                                  ImageUrl(
+                                      "http://localhost:3000/image/${message[1]}\$${e.name}"));
+                            } else {
+                              urls.insert(
+                                  index,
+                                  VideoUrl(
+                                      "http://localhost:3000/image/${message[1]}\$${e.name}"));
+                            }
+                          }
+                        }
                         //setState(() {
                         //  _showbottomsheet = false;
                         //});
@@ -64,16 +91,7 @@ class _StudentPageState extends State<StudentPage> {
                           MaterialPageRoute(
                               builder: (context) => BaseTable(
                                     title: 'Table',
-                                    urls: urls, 
-																		//[
-                                    //  VideoUrl(
-                                    //      'http://localhost:3000/image/MjAyMi0wMy0xNCAwODozMToyOC45ODc5MjExMjUgVVRD\$0.mp4'),
-                                    //  VideoUrl(
-                                    //      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-                                    //  TextUrl("aaaaa"),
-                                    //  TextUrl("bbbbb"),
-																		//	ImageUrl("http://localhost:3000/image/MjAyMi0wMy0xNCAwODozMToyOC45ODc5MjExMjUgVVRD\$2.png"),
-                                    //],
+                                    urls: urls,
                                   )),
                         );
                       },
