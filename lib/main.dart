@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
-  final titles = ["量表一", "量表二", "量表三", "量表四", "量表五", "量表六"];
+  final titles = ["量表一", "量表二", "量表三", "量表四", "量表五", "量表六", "量表七", "量表八"];
   //final times = ["2022.1.10", "2022.1.20", "2022.1.30", "2022.1.31","2022.6.4","2022.7.7"];
   //final List<String> times = [];
   @override
@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage> {
         future: fetchFolds("http://localhost:3000/folds"),
         builder:
             (BuildContext context, AsyncSnapshot<List<FoldTable>?> snapshot) {
-          //List<String> times = ["MjAyMi0wMy0xNCAwODozMjoxNC42NzYyMTAzMTcgVVRD", "MjAyMi0wMy0xNCAxNTozMjoxMC4xMjMwMjE5NDYgVVRD"];
           if (snapshot.hasData) {
             List<String> times = [];
             if (snapshot.data != null) {
