@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'form/papers.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
@@ -30,6 +32,7 @@ class _BaseTableState extends State<BaseTable> {
   //int _counter = 0;
   late int length;
   int localpage = 0;
+  int score = 0;
   DateTime start = DateTime.now();
   List<int> duration = [];
   @override
@@ -47,16 +50,6 @@ class _BaseTableState extends State<BaseTable> {
     length = inside.length;
   }
 
-  //void _incrementCounter() {
-  //  setState(() {
-  //    for (BaseWidget ainside in inside) {
-  //      int? d = ainside.score();
-  //      if (d != null) {
-  //        _counter += d;
-  //      }
-  //    }
-  //  });
-  //}
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
@@ -84,30 +77,30 @@ class _BaseTableState extends State<BaseTable> {
             for (final item in inside) SingleChildScrollView(child: item),
             const Text("Finish")
           ],
-          //mainAxisAlignment: MainAxisAlignment.center,
-          //children: <Widget>[
-          //  //const Text(
-          //  //  'You have pushed the button this many times:',
-          //  //),
-          //  Expanded(
-          //      child: ListView(children: [
-          //    for (final item in inside) item,
-          //    Text(
-          //      '$_counter',
-          //      style: Theme.of(context).textTheme.headline4,
-          //    ),
-          //  ])),
-          //],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           if (localpage < length) {
             if (inside[localpage].score() != null &&
                 inside[localpage].score()! >= 0) {
+              setState(() {
+                score += inside[localpage].score()!;
+              });
               controller.jumpToPage(localpage + 1);
             }
           } else {
+            await http.post(
+              Uri.parse("http://127.0.0.1:3000/receive"),
+              headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode({
+                "id": widget.title,
+                "score": score,
+                "duration": duration,
+              }),
+            );
             Navigator.pop(context);
           }
         },
