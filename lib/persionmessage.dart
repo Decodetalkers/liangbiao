@@ -2,6 +2,7 @@ enum User {
   student,
   teacher,
 }
+
 enum Logintype {
   anonymous,
   email,

@@ -321,7 +321,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ElevatedButton(
                                           child: const Text('登陸'),
                                           onPressed: () {
-                                            Navigator.pop(context);
+                                            //Navigator.pop(context);
                                             Navigator.pop(
                                                 context,
                                                 Message(

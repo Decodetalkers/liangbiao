@@ -27,7 +27,11 @@ class BaseTable extends StatefulWidget {
 
 class _BaseTableState extends State<BaseTable> {
   List<BaseWidget> inside = [];
-  int _counter = 0;
+  //int _counter = 0;
+  late int length;
+  int localpage = 0;
+  DateTime start = DateTime.now();
+  List<int> duration = [];
   @override
   void initState() {
     super.initState();
@@ -40,53 +44,73 @@ class _BaseTableState extends State<BaseTable> {
         inside.add(imagepaper(url: url.geturl()));
       }
     }
+    length = inside.length;
   }
 
-  void _incrementCounter() {
-    setState(() {
-      for (BaseWidget ainside in inside) {
-        int? d = ainside.score();
-        if (d != null) {
-          _counter += d;
-        }
-      }
-    });
-  }
-
+  //void _incrementCounter() {
+  //  setState(() {
+  //    for (BaseWidget ainside in inside) {
+  //      int? d = ainside.score();
+  //      if (d != null) {
+  //        _counter += d;
+  //      }
+  //    }
+  //  });
+  //}
   @override
   Widget build(BuildContext context) {
+    final PageController controller = PageController();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            //const Text(
-            //  'You have pushed the button this many times:',
-            //),
-            Expanded(
-                child: ListView(children: [
-              for (final item in inside) item,
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ])),
+        child: PageView(
+          controller: controller,
+          onPageChanged: (index) {
+            var time = DateTime.now();
+            //print("time is ${time.difference(start).inMilliseconds}");
+            setState(() {
+              duration.insert(
+                  duration.length, time.difference(start).inMilliseconds);
+              start = time;
+              localpage = index;
+            });
+          },
+          physics: const NeverScrollableScrollPhysics(),
+          children:
+              //inside.map((e) => SingleChildScrollView(child: e)).toList(),
+              [
+            for (final item in inside) SingleChildScrollView(child: item),
+            const Text("Finish")
           ],
+          //mainAxisAlignment: MainAxisAlignment.center,
+          //children: <Widget>[
+          //  //const Text(
+          //  //  'You have pushed the button this many times:',
+          //  //),
+          //  Expanded(
+          //      child: ListView(children: [
+          //    for (final item in inside) item,
+          //    Text(
+          //      '$_counter',
+          //      style: Theme.of(context).textTheme.headline4,
+          //    ),
+          //  ])),
+          //],
         ),
       ),
-      //bottomNavigationBar: BottomNavigationBar(
-      //  items: const <BottomNavigationBarItem>[
-      //    BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
-      //    BottomNavigationBarItem(icon: Icon(Icons.pages), label: '设置'),
-      //  ],
-      //  currentIndex: 0,
-      //  fixedColor: Colors.blue,
-      //),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          if (localpage < length) {
+            if (inside[localpage].score() != null &&
+                inside[localpage].score()! >= 0) {
+              controller.jumpToPage(localpage + 1);
+            }
+          } else {
+            Navigator.pop(context);
+          }
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

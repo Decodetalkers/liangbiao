@@ -90,7 +90,7 @@ class _StudentPageState extends State<StudentPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => BaseTable(
-                                    title: 'Table',
+                                    title: message[1],
                                     urls: urls,
                                   )),
                         );

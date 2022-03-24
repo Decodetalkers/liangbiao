@@ -23,12 +23,12 @@ class _VideoPaper extends StatefulWidget implements BaseWidget {
 }
 
 class _VideoPaperState extends State<_VideoPaper> {
-  int a = 0;
+  int a = -1;
   int? select;
   late VideoPlayerController _controller;
   late final String url;
   IconData playstate = Icons.play_arrow;
-  final selects = ["A", "B", "C", "D"];
+  final selects = ["非常符合", "比较符合", "较不符合", "很不符合"];
   @override
   void initState() {
     super.initState();
@@ -67,21 +67,26 @@ class _VideoPaperState extends State<_VideoPaper> {
           },
         ),
       ]),
-      Row(
+      Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: selects
             .asMap()
             .map((i, item) => MapEntry(
                 i,
-                Checkbox(
-                  value: i == select,
-                  onChanged: (val) {
-                    setState(() {
-                      select = i;
-                      a = i;
-                    });
-                  },
-                )))
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Checkbox(
+                        value: i == select,
+                        onChanged: (val) {
+                          setState(() {
+                            select = i;
+                            a = i;
+                          });
+                        },
+                      ),
+                      Text(item)
+                    ])))
             .values
             .toList(),
       )
@@ -121,9 +126,9 @@ class _TextPaper extends StatefulWidget implements BaseWidget {
 
 class _TextPaperState extends State<_TextPaper> {
   late final String url;
-  int a = 0;
+  int a = -1;
   int? select;
-  final selects = ["A", "B", "C", "D"];
+  final selects = ["非常符合", "比较符合", "较不符合", "很不符合"];
   @override
   void initState() {
     super.initState();
@@ -136,21 +141,26 @@ class _TextPaperState extends State<_TextPaper> {
     return Column(
       children: [
         Text(url),
-        Row(
+        Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: selects
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-                  Checkbox(
-                    value: i == select,
-                    onChanged: (val) {
-                      setState(() {
-                        select = i;
-                        a = i;
-                      });
-                    },
-                  )))
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Checkbox(
+                          value: i == select,
+                          onChanged: (val) {
+                            setState(() {
+                              select = i;
+                              a = i;
+                            });
+                          },
+                        ),
+                        Text(item)
+                      ])))
               .values
               .toList(),
         )
@@ -192,9 +202,9 @@ class _ImagePaper extends StatefulWidget implements BaseWidget {
 
 class _ImagePaperState extends State<_ImagePaper> {
   late final String url;
-  int a = 0;
+  int a = -1;
   int? select;
-  final selects = ["A", "B", "C", "D"];
+  final selects = ["非常符合", "比较符合", "较不符合", "很不符合"];
   @override
   void initState() {
     super.initState();
@@ -207,21 +217,26 @@ class _ImagePaperState extends State<_ImagePaper> {
     return Column(
       children: [
         Image.network(url),
-        Row(
+        Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: selects
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-                  Checkbox(
-                    value: i == select,
-                    onChanged: (val) {
-                      setState(() {
-                        select = i;
-                        a = i;
-                      });
-                    },
-                  )))
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Checkbox(
+                          value: i == select,
+                          onChanged: (val) {
+                            setState(() {
+                              select = i;
+                              a = i;
+                            });
+                          },
+                        ),
+                        Text(item)
+                      ])))
               .values
               .toList(),
         )
