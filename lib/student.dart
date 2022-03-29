@@ -17,7 +17,9 @@ Future<String?> _fetchTxt(String url) async {
 class StudentPage extends StatefulWidget {
   final List<String> titles;
   final List<String> times;
-  const StudentPage({Key? key, required this.times, required this.titles})
+  final String? id;
+  const StudentPage(
+      {Key? key, required this.times, required this.titles, required this.id})
       : super(key: key);
 
   @override
@@ -27,12 +29,14 @@ class StudentPage extends StatefulWidget {
 class _StudentPageState extends State<StudentPage> {
   late List<String> titles;
   late List<String> times;
+  late String? id;
   //bool _showbottomsheet = true;
   @override
   void initState() {
     super.initState();
     titles = widget.titles;
     times = widget.times;
+    id = widget.id;
   }
 
   Future<void> _handrefresh() async {
@@ -92,6 +96,7 @@ class _StudentPageState extends State<StudentPage> {
                               builder: (context) => BaseTable(
                                     title: message[1],
                                     urls: urls,
+                                    id: id,
                                   )),
                         );
                       },

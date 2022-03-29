@@ -15,8 +15,8 @@ Future<http.Response> logininto(String name, String passward) {
     Uri.parse("http://127.0.0.1:3000/login"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      'X-CUSTOM-HEADER': '123',
-      'Access-Control-Allow-Origin': 'http://localhost:37703'
+      //'X-CUSTOM-HEADER': '123',
+      //'Access-Control-Allow-Origin': 'http://localhost:37703'
     },
     body: jsonEncode({
       'name': name,
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                               context,
                               Message(
                                   person: dropdownValue!,
-                                  id: login["message"]["icon"]));
+                                  id: login["message"]["name"]));
                         }
                       }
                     }

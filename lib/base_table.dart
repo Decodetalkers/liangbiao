@@ -19,10 +19,12 @@ class PopTablePage extends StatelessWidget {
 }
 
 class BaseTable extends StatefulWidget {
-  const BaseTable({Key? key, required this.title, required this.urls})
+  const BaseTable(
+      {Key? key, required this.title, required this.urls, required this.id})
       : super(key: key);
   final String title;
   final List<FromUrl> urls;
+  final String? id;
   @override
   State<BaseTable> createState() => _BaseTableState();
 }
@@ -75,7 +77,7 @@ class _BaseTableState extends State<BaseTable> {
               //inside.map((e) => SingleChildScrollView(child: e)).toList(),
               [
             for (final item in inside) SingleChildScrollView(child: item),
-            const Text("Finish")
+            Text("Finish,score is $score")
           ],
         ),
       ),
@@ -90,17 +92,20 @@ class _BaseTableState extends State<BaseTable> {
               controller.jumpToPage(localpage + 1);
             }
           } else {
-            await http.post(
-              Uri.parse("http://127.0.0.1:3000/receive"),
-              headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-              },
-              body: jsonEncode({
-                "id": widget.title,
-                "score": score,
-                "duration": duration,
-              }),
-            );
+            if (widget.id != null) {
+              await http.post(
+                Uri.parse("http://127.0.0.1:3000/receive"),
+                headers: {
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode({
+                  "name": widget.id!,
+                  "id": widget.title,
+                  "score": score,
+                  "duration": duration,
+                }),
+              );
+            }
             Navigator.pop(context);
           }
         },

@@ -60,11 +60,42 @@ class _HomePageState extends State<HomePage> {
               times = snapshot.data!.map((e) => e.id).toList();
             }
             //return const Text("Beat");
-            return StudentPage(times: times, titles: titles);
+            return StudentPage(times: times, titles: titles, id: null);
+          } else if (snapshot.hasError) {
+            List<Widget> children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children,
+              ),
+            );
           } else {
-            return const Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
+            List<Widget> children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              )
+            ];
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children,
+              ),
             );
           }
         });
@@ -97,6 +128,24 @@ class _HomePageState extends State<HomePage> {
             personpage = TeacherPersonPage(id: result.id);
           }
         });
+        mainpages[0] = FutureBuilder<List<FoldTable>?>(
+            future: fetchFolds("http://localhost:3000/folds"),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<FoldTable>?> snapshot) {
+              if (snapshot.hasData) {
+                List<String> times = [];
+                if (snapshot.data != null) {
+                  times = snapshot.data!.map((e) => e.id).toList();
+                }
+                //return const Text("Beat");
+                return StudentPage(times: times, titles: titles, id: result.id);
+              } else {
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text('Awaiting result...'),
+                );
+              }
+            });
       }
     }
 
