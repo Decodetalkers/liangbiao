@@ -77,7 +77,7 @@ class _BaseTableState extends State<BaseTable> {
               //inside.map((e) => SingleChildScrollView(child: e)).toList(),
               [
             for (final item in inside) SingleChildScrollView(child: item),
-            Text("Finish,score is $score")
+            Text("Finish,score is ${score *100 / (3*length)}")
           ],
         ),
       ),
@@ -92,6 +92,7 @@ class _BaseTableState extends State<BaseTable> {
               controller.jumpToPage(localpage + 1);
             }
           } else {
+						var finalscore = score * 100 / (3*length);
             if (widget.id != null) {
               await http.post(
                 Uri.parse("http://127.0.0.1:3000/receive"),
@@ -101,7 +102,7 @@ class _BaseTableState extends State<BaseTable> {
                 body: jsonEncode({
                   "name": widget.id!,
                   "id": widget.title,
-                  "score": score,
+                  "score": finalscore,
                   "duration": duration,
                 }),
               );

@@ -19,7 +19,7 @@ class HistoryPage extends StatelessWidget {
 
 class Score {
   final String id;
-  final int score;
+  final double score;
   Score({
     required this.id,
     required this.score,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liangbiao/loginpage.dart';
+import 'utils.dart';
 import 'personpage.dart';
 import 'student.dart';
 import 'persionmessage.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Liangbiao',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: HomePage(),
     );
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     titles = widget.titles;
     //times = widget.times;
     var pageone = FutureBuilder<List<FoldTable>?>(
-        future: fetchFolds("http://localhost:3000/folds"),
+        future: fetchFolds("$serveurl/folds"),
         builder:
             (BuildContext context, AsyncSnapshot<List<FoldTable>?> snapshot) {
           if (snapshot.hasData) {
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
           }
         });
         mainpages[0] = FutureBuilder<List<FoldTable>?>(
-            future: fetchFolds("http://localhost:3000/folds"),
+            future: fetchFolds("$serveurl/folds"),
             builder: (BuildContext context,
                 AsyncSnapshot<List<FoldTable>?> snapshot) {
               if (snapshot.hasData) {
@@ -239,7 +240,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.pages), label: '设置'),
         ],
         currentIndex: _index,
-        fixedColor: Colors.blue,
+        fixedColor: Colors.purple,
         onTap: (int index) {
           if (_logined == true) {
             setState(() {

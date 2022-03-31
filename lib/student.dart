@@ -4,7 +4,7 @@ import 'base_table.dart';
 import 'package:quiver/iterables.dart';
 import 'http_get/get_menu.dart';
 import 'package:http/http.dart' as http;
-
+import 'utils.dart';
 Future<String?> _fetchTxt(String url) async {
   var menuget = await http.get(Uri.parse(url));
   if (menuget.statusCode == 200) {
@@ -41,7 +41,7 @@ class _StudentPageState extends State<StudentPage> {
 
   Future<void> _handrefresh() async {
     //await Future.delayed(const Duration(seconds: 2));
-    var output = await fetchFolds("http://localhost:3000/folds");
+    var output = await fetchFolds("$serveurl/folds");
 
     if (output != null) {
       List<String> times2 = output.map((e) => e.id).toList();
@@ -61,14 +61,14 @@ class _StudentPageState extends State<StudentPage> {
                       date: message[1],
                       onPressed: () async {
                         var output = await fetchMenu(
-                            "http://localhost:3000/json/${message[1]}");
+                            "$serveurl/json/${message[1]}");
                         List<FromUrl> urls = [];
                         if (output != null) {
                           for (var e in output) {
                             var index = urls.length;
                             if (e.filetype == "TXT") {
                               var txt = await _fetchTxt(
-                                  "http://localhost:3000/txt/${message[1]}\$${e.name}");
+                                  "$serveurl/txt/${message[1]}\$${e.name}");
                               if (txt != null) {
                                 urls.insert(index, TextUrl(txt));
                               } else {
@@ -78,12 +78,12 @@ class _StudentPageState extends State<StudentPage> {
                               urls.insert(
                                   index,
                                   ImageUrl(
-                                      "http://localhost:3000/image/${message[1]}\$${e.name}"));
+                                      "$serveurl/image/${message[1]}\$${e.name}"));
                             } else {
                               urls.insert(
                                   index,
                                   VideoUrl(
-                                      "http://localhost:3000/image/${message[1]}\$${e.name}"));
+                                      "$serveurl/image/${message[1]}\$${e.name}"));
                             }
                           }
                         }

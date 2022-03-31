@@ -3,7 +3,7 @@ import 'persionmessage.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'utils.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
 Future<http.Response> logininto(String name, String passward) {
   return http.post(
-    Uri.parse("http://127.0.0.1:3000/login"),
+    Uri.parse("$serveurl/login"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       //'X-CUSTOM-HEADER': '123',
@@ -27,7 +27,7 @@ Future<http.Response> logininto(String name, String passward) {
 
 Future<http.Response> registerinto(String name, String passward) {
   return http.post(
-    Uri.parse("http://127.0.0.1:3000/register"),
+    Uri.parse("$serveurl/register"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
