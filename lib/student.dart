@@ -109,7 +109,20 @@ class _StudentPageState extends State<StudentPage> {
 
 typedef ClickCallback = void Function();
 
-class HomePageButton extends StatefulWidget {
+//class HomePageButton extends StatefulWidget {
+//  const HomePageButton(
+//      {Key? key,
+//      required this.text,
+//      required this.date,
+//      required this.onPressed})
+//      : super(key: key);
+//  final String text;
+//  final String date;
+//  final ClickCallback onPressed;
+//  @override
+//  State<HomePageButton> createState() => _HomePageButtonState();
+//}
+class HomePageButton extends StatelessWidget {
   const HomePageButton(
       {Key? key,
       required this.text,
@@ -120,57 +133,80 @@ class HomePageButton extends StatefulWidget {
   final String date;
   final ClickCallback onPressed;
   @override
-  State<HomePageButton> createState() => _HomePageButtonState();
-}
-
-class _HomePageButtonState extends State<HomePageButton> {
-  Color color = Colors.white;
-  void _inchangeColor() {
-    setState(() {
-      if (color == Colors.white) {
-        color = Colors.grey;
-      } else {
-        color = Colors.white;
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-        border: Border.all(width: 30, color: color),
+    return Column(children: [
+      ListTile(
+        title: RichText(
+            text: TextSpan(
+          text: "\n$text\n\n",
+          style: const TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w700,
+          ),
+        )),
+        subtitle: RichText(
+            text: TextSpan(
+          text: "id: $date\n",
+          style: const TextStyle(
+            fontSize: 10,
+          ),
+        )),
+        onTap: onPressed,
       ),
-      child: GestureDetector(
-        onTapDown: (_infomation) {
-          _inchangeColor();
-        },
-        onTapUp: (_infomation) {
-          _inchangeColor();
-          widget.onPressed();
-        },
-        onTapCancel: _inchangeColor,
-        child: RichText(
-          text: TextSpan(children: [
-            TextSpan(
-                text: widget.text + "\n\n\n",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                )),
-            TextSpan(
-                text: widget.date,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                )),
-          ]),
-        ),
-      ),
-    );
+      const SizedBox(
+        height: 10,
+      )
+    ]);
   }
 }
+//class _HomePageButtonState extends State<HomePageButton> {
+//  Color color = Colors.white;
+//  void _inchangeColor() {
+//    setState(() {
+//      if (color == Colors.white) {
+//        color = Colors.grey;
+//      } else {
+//        color = Colors.white;
+//      }
+//    });
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      decoration: BoxDecoration(
+//        color: color,
+//        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+//        border: Border.all(width: 30, color: color),
+//      ),
+//      child: GestureDetector(
+//        onTapDown: (_infomation) {
+//          _inchangeColor();
+//        },
+//        onTapUp: (_infomation) {
+//          _inchangeColor();
+//          widget.onPressed();
+//        },
+//        onTapCancel: _inchangeColor,
+//        child: RichText(
+//          text: TextSpan(children: [
+//            TextSpan(
+//                text: widget.text + "\n\n\n",
+//                style: const TextStyle(
+//                  color: Colors.black,
+//                  fontSize: 21,
+//                  fontWeight: FontWeight.w700,
+//                )),
+//            TextSpan(
+//                text: widget.date,
+//                style: const TextStyle(
+//                  color: Colors.black,
+//                  fontSize: 14,
+//                  fontWeight: FontWeight.w400,
+//                )),
+//          ]),
+//        ),
+//      ),
+//    );
+//  }
+//}
