@@ -113,36 +113,6 @@ class _VideoPaperState extends State<_VideoPaper> {
             .values
             .toList(),
       )
-      //Column(
-      //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //  children: selects
-      //      .asMap()
-      //      .map((i, item) => MapEntry(
-      //          i,
-      //          TextButton(
-      //            style: TextButton.styleFrom(
-      //              primary: Colors.black,
-      //              padding: EdgeInsets.zero,
-      //              backgroundColor: select == i ? Colors.blue : Colors.white,
-      //              //backgroundColor: Colors.red,
-      //            ),
-      //            onPressed: () {
-      //              setState(() {
-      //                select = i;
-      //                a = i;
-      //              });
-      //            },
-      //            child: Container(
-      //              alignment: AlignmentDirectional.centerStart,
-      //              padding: const EdgeInsets.symmetric(
-      //                  vertical: 24, horizontal: 28),
-      //              child: Text(item),
-      //            ),
-      //          )
-      //          ))
-      //      .values
-      //      .toList(),
-      //)
     ]);
   }
 }
@@ -351,50 +321,6 @@ class _ImagePaperState extends State<_ImagePaper> {
               .values
               .toList(),
         )
-        //Column(
-        //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //  children: selects
-        //      .asMap()
-        //      .map((i, item) => MapEntry(
-        //          i,
-        //          TextButton(
-        //            style: TextButton.styleFrom(
-        //              primary: Colors.black,
-        //              padding: EdgeInsets.zero,
-        //              backgroundColor: select == i ? Colors.blue : Colors.white,
-        //              //backgroundColor: Colors.red,
-        //            ),
-        //            onPressed: () {
-        //              setState(() {
-        //                select = i;
-        //                a = i;
-        //              });
-        //            },
-        //            child: Container(
-        //              alignment: AlignmentDirectional.centerStart,
-        //              padding: const EdgeInsets.symmetric(
-        //                  vertical: 24, horizontal: 28),
-        //              child: Text(item),
-        //            ),
-        //          )
-        //          //Row(
-        //          //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //          //    children: [
-        //          //      Checkbox(
-        //          //        value: i == select,
-        //          //        onChanged: (val) {
-        //          //          setState(() {
-        //          //            select = i;
-        //          //            a = i;
-        //          //          });
-        //          //        },
-        //          //      ),
-        //          //      Text(item)
-        //          //    ])
-        //          ))
-        //      .values
-        //      .toList(),
-        //)
       ],
     );
   }

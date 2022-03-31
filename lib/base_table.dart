@@ -125,7 +125,7 @@ class _BaseTableState extends State<BaseTable> {
           }
         },
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: localpage < length ? const Icon(Icons.arrow_right) : const Icon(Icons.arrow_upward),
       ),
     );
   }
