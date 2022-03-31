@@ -67,49 +67,82 @@ class _VideoPaperState extends State<_VideoPaper> {
           },
         ),
       ]),
+      const SizedBox(
+        height: 20,
+      ),
       Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: selects
             .asMap()
             .map((i, item) => MapEntry(
                 i,
-								TextButton(
-										style: TextButton.styleFrom(
-      							  primary: Colors.black,
-      							  padding: EdgeInsets.zero,
-											backgroundColor: 
-												select == i ? Colors.blue :Colors.white,
-											//backgroundColor: Colors.red,
-      							),
-      							onPressed: () {
-											setState(() {
-												select = i;
-												a = i;
-											});
-      							},
-      							child: Container(
-      							  alignment: AlignmentDirectional.centerStart,
-      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
-      							  child: Text(item),
-      							),)
-                //Row(
-                //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //    children: [
-                //      Checkbox(
-                //        value: i == select,
-                //        onChanged: (val) {
-                //          setState(() {
-                //            select = i;
-                //            a = i;
-                //          });
-                //        },
-                //      ),
-                //      Text(item)
-                //    ])
-								))
+                Column(children: [
+                  SizedBox(
+                      height: 100,
+                      width: 600,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0)),
+                          primary: Colors.black,
+                          padding: EdgeInsets.zero,
+                          backgroundColor:
+                              select == i ? Colors.blue : Colors.white,
+                          //backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            select = i;
+                            a = i;
+                          });
+                        },
+                        child: Container(
+                          alignment: AlignmentDirectional.centerStart,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 24, horizontal: 28),
+                          child: Text(
+                            item,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  )
+                ])))
             .values
             .toList(),
       )
+      //Column(
+      //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //  children: selects
+      //      .asMap()
+      //      .map((i, item) => MapEntry(
+      //          i,
+      //          TextButton(
+      //            style: TextButton.styleFrom(
+      //              primary: Colors.black,
+      //              padding: EdgeInsets.zero,
+      //              backgroundColor: select == i ? Colors.blue : Colors.white,
+      //              //backgroundColor: Colors.red,
+      //            ),
+      //            onPressed: () {
+      //              setState(() {
+      //                select = i;
+      //                a = i;
+      //              });
+      //            },
+      //            child: Container(
+      //              alignment: AlignmentDirectional.centerStart,
+      //              padding: const EdgeInsets.symmetric(
+      //                  vertical: 24, horizontal: 28),
+      //              child: Text(item),
+      //            ),
+      //          )
+      //          ))
+      //      .values
+      //      .toList(),
+      //)
     ]);
   }
 }
@@ -160,41 +193,62 @@ class _TextPaperState extends State<_TextPaper> {
     //return Text(url);
     return Column(
       children: [
-        Text(
-					url,
-					style: const TextStyle(
-						fontSize: 40,
-						fontWeight: FontWeight.bold,
-					),
-				),
+        const SizedBox(
+          height: 100,
+        ),
+        SizedBox(
+            width: 600,
+            height: 200,
+            child: Text(
+              url,
+              style: const TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+        const SizedBox(
+          height: 20,
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: selects
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-									TextButton(
-										style: TextButton.styleFrom(
-      							  primary: Colors.black,
-      							  padding: EdgeInsets.zero,
-											backgroundColor: 
-												select == i ? Colors.blue :Colors.white,
-											//backgroundColor: Colors.red,
-      							),
-      							onPressed: () {
-											setState(() {
-												select = i;
-												a = i;
-											});
-      							},
-      							child: Container(
-      							  alignment: AlignmentDirectional.centerStart,
-      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
-											child: Text(item),
-      							),)
-										
-									)
-									)
+                  Column(children: [
+                    SizedBox(
+                        height: 100,
+                        width: 600,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            primary: Colors.black,
+                            padding: EdgeInsets.zero,
+                            backgroundColor:
+                                select == i ? Colors.blue : Colors.white,
+                            //backgroundColor: Colors.red,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              select = i;
+                              a = i;
+                            });
+                          },
+                          child: Container(
+                            alignment: AlignmentDirectional.centerStart,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 24, horizontal: 28),
+                            child: Text(
+                              item,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    )
+                  ])))
               .values
               .toList(),
         )
@@ -251,49 +305,96 @@ class _ImagePaperState extends State<_ImagePaper> {
     return Column(
       children: [
         Image.network(url),
+        const SizedBox(
+          height: 20,
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: selects
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-									TextButton(
-										style: TextButton.styleFrom(
-      							  primary: Colors.black,
-      							  padding: EdgeInsets.zero,
-											backgroundColor: 
-												select == i ? Colors.blue :Colors.white,
-											//backgroundColor: Colors.red,
-      							),
-      							onPressed: () {
-											setState(() {
-												select = i;
-												a = i;
-											});
-      							},
-      							child: Container(
-      							  alignment: AlignmentDirectional.centerStart,
-      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
-      							  child: Text(item),
-      							),)
-                  //Row(
-                  //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //    children: [
-                  //      Checkbox(
-                  //        value: i == select,
-                  //        onChanged: (val) {
-                  //          setState(() {
-                  //            select = i;
-                  //            a = i;
-                  //          });
-                  //        },
-                  //      ),
-                  //      Text(item)
-                  //    ])
-											))
+                  Column(children: [
+                    SizedBox(
+                        height: 100,
+                        width: 600,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            primary: Colors.black,
+                            padding: EdgeInsets.zero,
+                            backgroundColor:
+                                select == i ? Colors.blue : Colors.white,
+                            //backgroundColor: Colors.red,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              select = i;
+                              a = i;
+                            });
+                          },
+                          child: Container(
+                            alignment: AlignmentDirectional.centerStart,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 24, horizontal: 28),
+                            child: Text(
+                              item,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    )
+                  ])))
               .values
               .toList(),
         )
+        //Column(
+        //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //  children: selects
+        //      .asMap()
+        //      .map((i, item) => MapEntry(
+        //          i,
+        //          TextButton(
+        //            style: TextButton.styleFrom(
+        //              primary: Colors.black,
+        //              padding: EdgeInsets.zero,
+        //              backgroundColor: select == i ? Colors.blue : Colors.white,
+        //              //backgroundColor: Colors.red,
+        //            ),
+        //            onPressed: () {
+        //              setState(() {
+        //                select = i;
+        //                a = i;
+        //              });
+        //            },
+        //            child: Container(
+        //              alignment: AlignmentDirectional.centerStart,
+        //              padding: const EdgeInsets.symmetric(
+        //                  vertical: 24, horizontal: 28),
+        //              child: Text(item),
+        //            ),
+        //          )
+        //          //Row(
+        //          //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //          //    children: [
+        //          //      Checkbox(
+        //          //        value: i == select,
+        //          //        onChanged: (val) {
+        //          //          setState(() {
+        //          //            select = i;
+        //          //            a = i;
+        //          //          });
+        //          //        },
+        //          //      ),
+        //          //      Text(item)
+        //          //    ])
+        //          ))
+        //      .values
+        //      .toList(),
+        //)
       ],
     );
   }

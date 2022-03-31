@@ -3,6 +3,7 @@ import 'form/papers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'utils.dart';
+
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
   const PopTablePage({Key? key, required this.table}) : super(key: key);
@@ -57,10 +58,15 @@ class _BaseTableState extends State<BaseTable> {
     final PageController controller = PageController();
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        centerTitle: true,
+        title: Text(
+          "$localpage / $length",
+          textAlign: TextAlign.center,
+        ),
       ),
       body: Center(
-        child: Stack(children:[PageView(
+          child: Stack(children: [
+        PageView(
           controller: controller,
           onPageChanged: (index) {
             var time = DateTime.now();
@@ -77,19 +83,18 @@ class _BaseTableState extends State<BaseTable> {
               //inside.map((e) => SingleChildScrollView(child: e)).toList(),
               [
             for (final item in inside) SingleChildScrollView(child: item),
-            Text("Finish,score is ${score *100 / (3*length)}")
+            Text("Finish,score is ${score * 100 / (3 * length)}")
           ],
         ),
-				Container(
-						alignment: Alignment.topCenter,
-				    child:LinearProgressIndicator(
-              value: localpage / length,
-              semanticsLabel: 'Linear progress indicator',
-							color: Colors.green,
-            ),
-						),
-				])
-      ),
+        Container(
+          alignment: Alignment.topCenter,
+          child: LinearProgressIndicator(
+            value: localpage / length,
+            semanticsLabel: 'Linear progress indicator',
+            color: Colors.green,
+          ),
+        ),
+      ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (localpage < length) {
@@ -101,7 +106,7 @@ class _BaseTableState extends State<BaseTable> {
               controller.jumpToPage(localpage + 1);
             }
           } else {
-						var finalscore = score * 100 / (3*length);
+            var finalscore = score * 100 / (3 * length);
             if (widget.id != null) {
               await http.post(
                 Uri.parse("$serveurl/receive"),

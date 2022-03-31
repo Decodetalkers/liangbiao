@@ -5,6 +5,7 @@ import 'package:quiver/iterables.dart';
 import 'http_get/get_menu.dart';
 import 'package:http/http.dart' as http;
 import 'utils.dart';
+
 Future<String?> _fetchTxt(String url) async {
   var menuget = await http.get(Uri.parse(url));
   if (menuget.statusCode == 200) {
@@ -60,8 +61,8 @@ class _StudentPageState extends State<StudentPage> {
                       text: message[0],
                       date: message[1],
                       onPressed: () async {
-                        var output = await fetchMenu(
-                            "$serveurl/json/${message[1]}");
+                        var output =
+                            await fetchMenu("$serveurl/json/${message[1]}");
                         List<FromUrl> urls = [];
                         if (output != null) {
                           for (var e in output) {
