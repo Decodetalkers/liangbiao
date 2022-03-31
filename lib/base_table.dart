@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'form/papers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'utils.dart';
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
   const PopTablePage({Key? key, required this.table}) : super(key: key);
@@ -60,7 +60,7 @@ class _BaseTableState extends State<BaseTable> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: PageView(
+        child: Stack(children:[PageView(
           controller: controller,
           onPageChanged: (index) {
             var time = DateTime.now();
@@ -80,6 +80,15 @@ class _BaseTableState extends State<BaseTable> {
             Text("Finish,score is ${score *100 / (3*length)}")
           ],
         ),
+				Container(
+						alignment: Alignment.topCenter,
+				    child:LinearProgressIndicator(
+              value: localpage / length,
+              semanticsLabel: 'Linear progress indicator',
+							color: Colors.green,
+            ),
+						),
+				])
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -95,7 +104,7 @@ class _BaseTableState extends State<BaseTable> {
 						var finalscore = score * 100 / (3*length);
             if (widget.id != null) {
               await http.post(
-                Uri.parse("http://127.0.0.1:3000/receive"),
+                Uri.parse("$serveurl/receive"),
                 headers: {
                   'Content-Type': 'application/json; charset=UTF-8',
                 },

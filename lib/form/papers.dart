@@ -73,20 +73,40 @@ class _VideoPaperState extends State<_VideoPaper> {
             .asMap()
             .map((i, item) => MapEntry(
                 i,
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Checkbox(
-                        value: i == select,
-                        onChanged: (val) {
-                          setState(() {
-                            select = i;
-                            a = i;
-                          });
-                        },
-                      ),
-                      Text(item)
-                    ])))
+								TextButton(
+										style: TextButton.styleFrom(
+      							  primary: Colors.black,
+      							  padding: EdgeInsets.zero,
+											backgroundColor: 
+												select == i ? Colors.blue :Colors.white,
+											//backgroundColor: Colors.red,
+      							),
+      							onPressed: () {
+											setState(() {
+												select = i;
+												a = i;
+											});
+      							},
+      							child: Container(
+      							  alignment: AlignmentDirectional.centerStart,
+      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
+      							  child: Text(item),
+      							),)
+                //Row(
+                //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //    children: [
+                //      Checkbox(
+                //        value: i == select,
+                //        onChanged: (val) {
+                //          setState(() {
+                //            select = i;
+                //            a = i;
+                //          });
+                //        },
+                //      ),
+                //      Text(item)
+                //    ])
+								))
             .values
             .toList(),
       )
@@ -140,27 +160,41 @@ class _TextPaperState extends State<_TextPaper> {
     //return Text(url);
     return Column(
       children: [
-        Text(url),
+        Text(
+					url,
+					style: const TextStyle(
+						fontSize: 40,
+						fontWeight: FontWeight.bold,
+					),
+				),
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: selects
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Checkbox(
-                          value: i == select,
-                          onChanged: (val) {
-                            setState(() {
-                              select = i;
-                              a = i;
-                            });
-                          },
-                        ),
-                        Text(item)
-                      ])))
+									TextButton(
+										style: TextButton.styleFrom(
+      							  primary: Colors.black,
+      							  padding: EdgeInsets.zero,
+											backgroundColor: 
+												select == i ? Colors.blue :Colors.white,
+											//backgroundColor: Colors.red,
+      							),
+      							onPressed: () {
+											setState(() {
+												select = i;
+												a = i;
+											});
+      							},
+      							child: Container(
+      							  alignment: AlignmentDirectional.centerStart,
+      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
+											child: Text(item),
+      							),)
+										
+									)
+									)
               .values
               .toList(),
         )
@@ -223,20 +257,40 @@ class _ImagePaperState extends State<_ImagePaper> {
               .asMap()
               .map((i, item) => MapEntry(
                   i,
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Checkbox(
-                          value: i == select,
-                          onChanged: (val) {
-                            setState(() {
-                              select = i;
-                              a = i;
-                            });
-                          },
-                        ),
-                        Text(item)
-                      ])))
+									TextButton(
+										style: TextButton.styleFrom(
+      							  primary: Colors.black,
+      							  padding: EdgeInsets.zero,
+											backgroundColor: 
+												select == i ? Colors.blue :Colors.white,
+											//backgroundColor: Colors.red,
+      							),
+      							onPressed: () {
+											setState(() {
+												select = i;
+												a = i;
+											});
+      							},
+      							child: Container(
+      							  alignment: AlignmentDirectional.centerStart,
+      							  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
+      							  child: Text(item),
+      							),)
+                  //Row(
+                  //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //    children: [
+                  //      Checkbox(
+                  //        value: i == select,
+                  //        onChanged: (val) {
+                  //          setState(() {
+                  //            select = i;
+                  //            a = i;
+                  //          });
+                  //        },
+                  //      ),
+                  //      Text(item)
+                  //    ])
+											))
               .values
               .toList(),
         )
