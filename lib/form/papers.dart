@@ -77,35 +77,46 @@ class _VideoPaperState extends State<_VideoPaper> {
             .map((i, item) => MapEntry(
                 i,
                 Column(children: [
-                  SizedBox(
-                      height: 100,
-                      width: 600,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0)),
-                          primary: Colors.black,
-                          padding: EdgeInsets.zero,
-                          backgroundColor:
-                              select == i ? Colors.blue : Colors.white,
-                          //backgroundColor: Colors.red,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            select = i;
-                            a = i;
-                          });
-                        },
-                        child: Container(
-                          alignment: AlignmentDirectional.centerStart,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 24, horizontal: 28),
-                          child: Text(
-                            item,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      )),
+                  Container(
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.purple,
+                              blurRadius: 4,
+                              offset: Offset(4, 8))
+                        ],
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: SizedBox(
+                          height: 100,
+                          width: 600,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              primary:
+                                  select == i ? Colors.white : Colors.black,
+                              padding: EdgeInsets.zero,
+                              backgroundColor:
+                                  select == i ? Colors.purple : Colors.white,
+                              //backgroundColor: Colors.red,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                select = i;
+                                a = i;
+                              });
+                            },
+                            child: Container(
+                              alignment: AlignmentDirectional.centerStart,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 24, horizontal: 28),
+                              child: Text(
+                                item,
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ),
+                          ))),
                   const SizedBox(
                     height: 20,
                   )
@@ -186,35 +197,49 @@ class _TextPaperState extends State<_TextPaper> {
               .map((i, item) => MapEntry(
                   i,
                   Column(children: [
-                    SizedBox(
-                        height: 100,
-                        width: 600,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0)),
-                            primary: Colors.black,
-                            padding: EdgeInsets.zero,
-                            backgroundColor:
-                                select == i ? Colors.blue : Colors.white,
-                            //backgroundColor: Colors.red,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              select = i;
-                              a = i;
-                            });
-                          },
-                          child: Container(
-                            alignment: AlignmentDirectional.centerStart,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 24, horizontal: 28),
-                            child: Text(
-                              item,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        )),
+                    Container(
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.purple,
+                                blurRadius: 4,
+                                offset: Offset(4, 8))
+                          ],
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: SizedBox(
+                            height: 100,
+                            width: 600,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                primary:
+                                    select == i ? Colors.white : Colors.black,
+                                padding: EdgeInsets.zero,
+                                backgroundColor:
+                                    select == i ? Colors.purple : Colors.white,
+                                //backgroundColor: Colors.red,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  select = i;
+                                  a = i;
+                                });
+                              },
+                              child: Container(
+                                alignment: AlignmentDirectional.centerStart,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 24, horizontal: 28),
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
+                            ))),
                     const SizedBox(
                       height: 20,
                     )
@@ -285,35 +310,47 @@ class _ImagePaperState extends State<_ImagePaper> {
               .map((i, item) => MapEntry(
                   i,
                   Column(children: [
-                    SizedBox(
-                        height: 100,
-                        width: 600,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0)),
-                            primary: Colors.black,
-                            padding: EdgeInsets.zero,
-                            backgroundColor:
-                                select == i ? Colors.blue : Colors.white,
-                            //backgroundColor: Colors.red,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              select = i;
-                              a = i;
-                            });
-                          },
-                          child: Container(
-                            alignment: AlignmentDirectional.centerStart,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 24, horizontal: 28),
-                            child: Text(
-                              item,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        )),
+                    Container(
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.purple,
+                                blurRadius: 4,
+                                offset: Offset(4, 8))
+                          ],
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: SizedBox(
+                            height: 100,
+                            width: 600,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0)),
+                                primary:
+                                    select == i ? Colors.white : Colors.black,
+
+                                padding: EdgeInsets.zero,
+                                backgroundColor:
+                                    select == i ? Colors.purple : Colors.white,
+                                //backgroundColor: Colors.red,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  select = i;
+                                  a = i;
+                                });
+                              },
+                              child: Container(
+                                alignment: AlignmentDirectional.centerStart,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 24, horizontal: 28),
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            ))),
                     const SizedBox(
                       height: 20,
                     )

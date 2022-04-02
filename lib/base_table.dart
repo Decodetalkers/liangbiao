@@ -83,7 +83,21 @@ class _BaseTableState extends State<BaseTable> {
               //inside.map((e) => SingleChildScrollView(child: e)).toList(),
               [
             for (final item in inside) SingleChildScrollView(child: item),
-            Text("Finish,score is ${score * 100 / (3 * length)}")
+            Column(children: [
+              const SizedBox(
+                height: 150,
+              ),
+              SizedBox(
+                  width: 600,
+                  height: 200,
+                  child: Text(
+                    "Finish,score is ${score * 100 / (3 * length)}",
+                    style: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ))
+            ])
           ],
         ),
         Container(
@@ -125,7 +139,9 @@ class _BaseTableState extends State<BaseTable> {
           }
         },
         tooltip: 'Increment',
-        child: localpage < length ? const Icon(Icons.arrow_right) : const Icon(Icons.arrow_upward),
+        child: localpage < length
+            ? const Icon(Icons.arrow_right)
+            : const Icon(Icons.arrow_upward),
       ),
     );
   }
