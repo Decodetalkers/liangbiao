@@ -32,10 +32,10 @@ class HomePage extends StatefulWidget {
   //final times = ["2022.1.10", "2022.1.20", "2022.1.30", "2022.1.31","2022.6.4","2022.7.7"];
   //final List<String> times = [];
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   late List<String> titles;
   //late List<String> times;
   int _index = 0;

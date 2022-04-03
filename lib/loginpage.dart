@@ -170,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                         var logined = await logininto(
                             idController.text, passwardController.text);
                         var login = jsonDecode(logined.body);
+                        if (!mounted) return;
                         if (login["logined"] == true) {
                           // Close the screen and return "Yep!" as the result.
                           Navigator.pop(

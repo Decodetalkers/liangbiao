@@ -24,10 +24,10 @@ class StudentPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _StudentPageState createState() => _StudentPageState();
+  StudentPageState createState() => StudentPageState();
 }
 
-class _StudentPageState extends State<StudentPage> {
+class StudentPageState extends State<StudentPage> {
   late List<String> titles;
   late List<String> times;
   late String? id;
@@ -55,55 +55,57 @@ class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        child: ListView(
-            children: zip([titles, times])
-                .map((message) => HomePageButton(
-                      text: message[0],
-                      date: message[1],
-                      onPressed: () async {
-                        var output =
-                            await fetchMenu("$serveurl/json/${message[1]}");
-                        List<FromUrl> urls = [];
-                        if (output != null) {
-                          for (var e in output) {
-                            var index = urls.length;
-                            if (e.filetype == "TXT") {
-                              var txt = await _fetchTxt(
-                                  "$serveurl/txt/${message[1]}\$${e.name}");
-                              if (txt != null) {
-                                urls.insert(index, TextUrl(txt));
-                              } else {
-                                urls.insert(index, const TextUrl("Not fond"));
-                              }
-                            } else if (e.filetype == "Image") {
-                              urls.insert(
-                                  index,
-                                  ImageUrl(
-                                      "$serveurl/image/${message[1]}\$${e.name}"));
+      onRefresh: _handrefresh,
+      child: ListView(
+          children: zip([titles, times])
+              .map((message) => HomePageButton(
+                    text: message[0],
+                    date: message[1],
+                    onPressed: () async {
+                      var output =
+                          await fetchMenu("$serveurl/json/${message[1]}");
+                      List<FromUrl> urls = [];
+                      if (output != null) {
+                        for (var e in output) {
+                          var index = urls.length;
+                          if (e.filetype == "TXT") {
+                            var txt = await _fetchTxt(
+                                "$serveurl/txt/${message[1]}\$${e.name}");
+                            if (txt != null) {
+                              urls.insert(index, TextUrl(txt));
                             } else {
-                              urls.insert(
-                                  index,
-                                  VideoUrl(
-                                      "$serveurl/image/${message[1]}\$${e.name}"));
+                              urls.insert(index, const TextUrl("Not fond"));
                             }
+                          } else if (e.filetype == "Image") {
+                            urls.insert(
+                                index,
+                                ImageUrl(
+                                    "$serveurl/image/${message[1]}\$${e.name}"));
+                          } else {
+                            urls.insert(
+                                index,
+                                VideoUrl(
+                                    "$serveurl/image/${message[1]}\$${e.name}"));
                           }
                         }
-                        //setState(() {
-                        //  _showbottomsheet = false;
-                        //});
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BaseTable(
-                                    title: message[1],
-                                    urls: urls,
-                                    id: id,
-                                  )),
-                        );
-                      },
-                    ))
-                .toList()),
-        onRefresh: _handrefresh);
+                      }
+                      //setState(() {
+                      //  _showbottomsheet = false;
+                      //});
+                      if (!mounted) return;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BaseTable(
+                                  title: message[1],
+                                  urls: urls,
+                                  id: id,
+                                )),
+                      );
+                    },
+                  ))
+              .toList()),
+    );
   }
 }
 

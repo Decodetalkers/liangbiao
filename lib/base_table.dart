@@ -135,6 +135,7 @@ class _BaseTableState extends State<BaseTable> {
                 }),
               );
             }
+            if (!mounted) return;
             Navigator.pop(context);
           }
         },

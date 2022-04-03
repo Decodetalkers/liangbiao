@@ -3,12 +3,12 @@ export 'base_widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-typedef _VideoPaperKey = GlobalKey<_VideoPaperState>;
+typedef VideoPaperKey = GlobalKey<VideoPaperState>;
 
-class _VideoPaper extends StatefulWidget implements BaseWidget {
-  late final _VideoPaperKey _key;
+class VideoPaper extends StatefulWidget implements BaseWidget {
+  late final VideoPaperKey _key;
   late final String _url;
-  _VideoPaper({required _VideoPaperKey key, required String url})
+  VideoPaper({required VideoPaperKey key, required String url})
       : super(key: key) {
     _key = key;
     _url = url;
@@ -19,10 +19,10 @@ class _VideoPaper extends StatefulWidget implements BaseWidget {
   }
 
   @override
-  State<_VideoPaper> createState() => _VideoPaperState();
+  State<VideoPaper> createState() => VideoPaperState();
 }
 
-class _VideoPaperState extends State<_VideoPaper> {
+class VideoPaperState extends State<VideoPaper> {
   int a = -1;
   int? select;
   late VideoPlayerController _controller;
@@ -137,14 +137,14 @@ class VideoUrl implements FromUrl {
   }
 }
 
-_VideoPaper videopaper({required String url}) =>
-    _VideoPaper(key: GlobalKey(), url: url);
-typedef _TextPaperKey = GlobalKey<_TextPaperState>;
+VideoPaper videopaper({required String url}) =>
+    VideoPaper(key: GlobalKey(), url: url);
+typedef TextPaperKey = GlobalKey<TextPaperState>;
 
-class _TextPaper extends StatefulWidget implements BaseWidget {
-  late final _TextPaperKey _key;
+class TextPaper extends StatefulWidget implements BaseWidget {
+  late final TextPaperKey _key;
   late final String _url;
-  _TextPaper({required _TextPaperKey key, required String url})
+  TextPaper({required TextPaperKey key, required String url})
       : super(key: key) {
     _key = key;
     _url = url;
@@ -155,10 +155,10 @@ class _TextPaper extends StatefulWidget implements BaseWidget {
   }
 
   @override
-  State<_TextPaper> createState() => _TextPaperState();
+  State<TextPaper> createState() => TextPaperState();
 }
 
-class _TextPaperState extends State<_TextPaper> {
+class TextPaperState extends State<TextPaper> {
   late final String url;
   int a = -1;
   int? select;
@@ -252,8 +252,8 @@ class _TextPaperState extends State<_TextPaper> {
   }
 }
 
-_TextPaper textpaper({required String url}) =>
-    _TextPaper(key: GlobalKey(), url: url);
+TextPaper textpaper({required String url}) =>
+    TextPaper(key: GlobalKey(), url: url);
 
 class TextUrl implements FromUrl {
   final String url;
@@ -264,12 +264,12 @@ class TextUrl implements FromUrl {
   }
 }
 
-typedef _ImagePaperKey = GlobalKey<_ImagePaperState>;
+typedef ImagePaperKey = GlobalKey<ImagePaperState>;
 
-class _ImagePaper extends StatefulWidget implements BaseWidget {
-  late final _ImagePaperKey _key;
+class ImagePaper extends StatefulWidget implements BaseWidget {
+  late final ImagePaperKey _key;
   late final String _url;
-  _ImagePaper({required _ImagePaperKey key, required String url})
+  ImagePaper({required ImagePaperKey key, required String url})
       : super(key: key) {
     _key = key;
     _url = url;
@@ -280,10 +280,10 @@ class _ImagePaper extends StatefulWidget implements BaseWidget {
   }
 
   @override
-  State<_ImagePaper> createState() => _ImagePaperState();
+  State<ImagePaper> createState() => ImagePaperState();
 }
 
-class _ImagePaperState extends State<_ImagePaper> {
+class ImagePaperState extends State<ImagePaper> {
   late final String url;
   int a = -1;
   int? select;
@@ -363,8 +363,8 @@ class _ImagePaperState extends State<_ImagePaper> {
   }
 }
 
-_ImagePaper imagepaper({required String url}) =>
-    _ImagePaper(key: GlobalKey(), url: url);
+ImagePaper imagepaper({required String url}) =>
+    ImagePaper(key: GlobalKey(), url: url);
 
 class ImageUrl implements FromUrl {
   final String url;
