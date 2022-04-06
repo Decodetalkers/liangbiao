@@ -66,7 +66,7 @@ class StudentPageState extends State<StudentPage> {
                           await fetchMenu("$serveurl/json/${message[1]}");
                       List<FromUrl> urls = [];
                       if (output != null) {
-                        for (var e in output) {
+                        for (var e in output.pages) {
                           var index = urls.length;
                           if (e.filetype == "TXT") {
                             var txt = await _fetchTxt(
@@ -97,6 +97,7 @@ class StudentPageState extends State<StudentPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => BaseTable(
+                                  tabletype: output!.tabletype,
                                   title: message[1],
                                   urls: urls,
                                   id: id,

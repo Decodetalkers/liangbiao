@@ -3,6 +3,7 @@ import 'form/papers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'utils.dart';
+import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
@@ -21,8 +22,13 @@ class PopTablePage extends StatelessWidget {
 
 class BaseTable extends StatefulWidget {
   const BaseTable(
-      {Key? key, required this.title, required this.urls, required this.id})
+      {Key? key,
+      required this.title,
+      required this.urls,
+      required this.id,
+      required this.tabletype})
       : super(key: key);
+  final String tabletype;
   final String title;
   final List<FromUrl> urls;
   final String? id;
@@ -96,7 +102,27 @@ class _BaseTableState extends State<BaseTable> {
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                     ),
-                  ))
+                  )),
+              Expanded(
+                  child: RadarChart.dark(
+                ticks: const [7, 14, 21, 28, 35],
+                features: const [
+                  "AA",
+                  "BB",
+                  "CC",
+                  "DD",
+                  "EE",
+                  "FF",
+                  "GG",
+                  "HH"
+                ],
+                data: const [
+                  [10.0, 20, 28, 5, 16, 15, 17, 6],
+                  [14.5, 1, 4, 14, 23, 10, 6, 19]
+                ],
+                useSides: true,
+                reverseAxis: true,
+              ))
             ])
           ],
         ),
@@ -128,6 +154,7 @@ class _BaseTableState extends State<BaseTable> {
                   'Content-Type': 'application/json; charset=UTF-8',
                 },
                 body: jsonEncode({
+                  "tabletype": widget.tabletype,
                   "name": widget.id!,
                   "id": widget.title,
                   "score": finalscore,

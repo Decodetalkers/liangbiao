@@ -21,11 +21,23 @@ class FoldTable {
   factory FoldTable.fromJson(dynamic json) => FoldTable(id: json["id"]);
 }
 
-Future<List<Index>?> fetchMenu(String url) async {
+class FoldMenu {
+  final List<Index> pages;
+  final String tabletype;
+  FoldMenu({
+    required this.pages,
+    required this.tabletype,
+  });
+}
+
+Future<FoldMenu?> fetchMenu(String url) async {
   var menuget = await http.get(Uri.parse(url));
   if (menuget.statusCode == 200) {
     var json = jsonDecode(menuget.body);
-    return (json as List).map((e) => Index.fromJson(e)).toList();
+    //var menu = json["menu"];
+    return FoldMenu(
+        tabletype: json["tabletype"],
+        pages: (json["menu"] as List).map((e) => Index.fromJson(e)).toList());
   } else {
     return null;
   }
