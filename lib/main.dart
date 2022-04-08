@@ -1,5 +1,9 @@
+// 需要加一個background
+// 老師的pages
+
 import 'package:flutter/material.dart';
 import 'package:liangbiao/loginpage.dart';
+import 'package:liangbiao/teacher.dart';
 import 'utils.dart';
 import 'personpage.dart';
 import 'student.dart';
@@ -125,7 +129,7 @@ class HomePageState extends State<HomePage> {
           } else {
             _mainpageindex = 1;
             loginer = User.teacher;
-            mainpages[1] = TeacherPersonPage(id: result.id);
+            mainpages[1] = const TeacherPage();
             personpage = TeacherPersonPage(id: result.id);
           }
         });
@@ -213,7 +217,7 @@ class HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                  const Text('Modal BottomSheet'),
+                                  const Text('Login'),
                                   ElevatedButton(
                                       child: const Text('登陆'),
                                       onPressed: () {
@@ -258,7 +262,7 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          const Text('Modal BottomSheet'),
+                          const Text('Login'),
                           ElevatedButton(
                               child: const Text('登陆'),
                               onPressed: () {

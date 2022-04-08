@@ -13,6 +13,36 @@ class Index {
       Index(filetype: json["filetype"], name: json["name"]);
 }
 
+class Historys {
+  final String tabletype;
+  final String name;
+  final double score;
+  final List<int> duration;
+  Historys({
+    required this.tabletype,
+    required this.name,
+    required this.score,
+    required this.duration,
+  });
+}
+
+Future<List<Historys>?> fetchHistory(String url) async {
+  var history = await http.get(Uri.parse(url));
+  if (history.statusCode == 200) {
+    var json = jsonDecode(history.body);
+    //var menu = json["menu"];
+    return (json as List<dynamic>)
+        .map((e) => Historys(
+            tabletype: e["tabletype"],
+            name: e["name"],
+            score: e["score"],
+            duration: (e["duration"] as List).cast<int>()))
+        .toList();
+  } else {
+    return null;
+  }
+}
+
 class FoldTable {
   final String id;
   FoldTable({

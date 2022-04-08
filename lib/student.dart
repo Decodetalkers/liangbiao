@@ -144,6 +144,7 @@ class HomePageButton extends StatelessWidget {
           text: "\n$text\n\n",
           style: const TextStyle(
             fontSize: 25,
+            color: Colors.black,
             fontWeight: FontWeight.w700,
           ),
         )),
@@ -151,6 +152,7 @@ class HomePageButton extends StatelessWidget {
             text: TextSpan(
           text: "id: $date\n",
           style: const TextStyle(
+            color: Colors.black,
             fontSize: 10,
           ),
         )),

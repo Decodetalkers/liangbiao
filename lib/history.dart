@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'utils.dart';
 
 class HistoryPage extends StatelessWidget {
   final String id;
@@ -33,7 +34,7 @@ class Score {
 
 Future<List<Score>> fetchhistory(String input) async {
   var historyget = await http.post(
-    Uri.parse("http://127.0.0.1:3000/history"),
+    Uri.parse("$serveurl/history"),
     body: input,
   );
   if (historyget.statusCode == 200) {
