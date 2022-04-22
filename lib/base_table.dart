@@ -70,62 +70,71 @@ class _BaseTableState extends State<BaseTable> {
           textAlign: TextAlign.center,
         ),
       ),
+			// example show message
       body: Center(
           child: Stack(children: [
-        PageView(
-          controller: controller,
-          onPageChanged: (index) {
-            var time = DateTime.now();
-            //print("time is ${time.difference(start).inMilliseconds}");
-            setState(() {
-              duration.insert(
-                  duration.length, time.difference(start).inMilliseconds);
-              start = time;
-              localpage = index;
-            });
-          },
-          physics: const NeverScrollableScrollPhysics(),
-          children:
-              //inside.map((e) => SingleChildScrollView(child: e)).toList(),
-              [
-            for (final item in inside) SingleChildScrollView(child: item),
-            Column(children: [
-              const SizedBox(
-                height: 150,
+        Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/bubble.jpg"),
+                fit: BoxFit.cover,
               ),
-              SizedBox(
-                  width: 600,
-                  height: 200,
-                  child: Text(
-                    "Finish,score is ${score * 100 / (3 * length)}",
-                    style: const TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Expanded(
-                  child: RadarChart.dark(
-                ticks: const [7, 14, 21, 28, 35],
-                features: const [
-                  "AA",
-                  "BB",
-                  "CC",
-                  "DD",
-                  "EE",
-                  "FF",
-                  "GG",
-                  "HH"
-                ],
-                data: const [
-                  [10.0, 20, 28, 5, 16, 15, 17, 6],
-                  [14.5, 1, 4, 14, 23, 10, 6, 19]
-                ],
-                useSides: true,
-                reverseAxis: true,
-              ))
-            ])
-          ],
-        ),
+            ),
+            child: PageView(
+              controller: controller,
+              onPageChanged: (index) {
+                var time = DateTime.now();
+                //print("time is ${time.difference(start).inMilliseconds}");
+                setState(() {
+                  duration.insert(
+                      duration.length, time.difference(start).inMilliseconds);
+                  start = time;
+                  localpage = index;
+                });
+              },
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                for (final item in inside)
+                  SingleChildScrollView(
+                    child: item,
+                  ),
+                Column(children: [
+                  const SizedBox(
+                    height: 150,
+                  ),
+                  SizedBox(
+                      width: 600,
+                      height: 200,
+                      child: Text(
+                        "Finish,score is ${score * 100 / (3 * length)}",
+                        style: const TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                  Expanded(
+                      child: RadarChart.dark(
+                    ticks: const [7, 14, 21, 28, 35],
+                    features: const [
+                      "AA",
+                      "BB",
+                      "CC",
+                      "DD",
+                      "EE",
+                      "FF",
+                      "GG",
+                      "HH"
+                    ],
+                    data: const [
+                      [10.0, 20, 28, 5, 16, 15, 17, 6],
+                      [14.5, 1, 4, 14, 23, 10, 6, 19]
+                    ],
+                    useSides: true,
+                    reverseAxis: true,
+                  ))
+                ])
+              ],
+            )),
         Container(
           alignment: Alignment.topCenter,
           child: LinearProgressIndicator(

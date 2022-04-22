@@ -11,7 +11,7 @@ class StudentPersonPage extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           const CircleAvatar(
-            backgroundImage: AssetImage('images/test.png'),
+            backgroundImage: AssetImage('images/kanagawa.png'),
             radius: 100,
           ),
           Container(

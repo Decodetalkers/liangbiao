@@ -26,6 +26,21 @@ Future<http.Response> logininto(String name, String passward) {
   );
 }
 
+Future<http.Response> adminlogininto(String name, String passward) {
+  return http.post(
+    Uri.parse("$serveurl/adminlogin"),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      //'X-CUSTOM-HEADER': '123',
+      //'Access-Control-Allow-Origin': 'http://localhost:37703'
+    },
+    body: jsonEncode({
+      'name': name,
+      'passward': passward,
+    }),
+  );
+}
+
 Future<http.Response> registerinto(String name, String passward) {
   return http.post(
     Uri.parse("$serveurl/register"),
@@ -167,8 +182,15 @@ class _LoginPageState extends State<LoginPage> {
                     if (_formKey1.currentState!.validate() &&
                         _formKey2.currentState!.validate()) {
                       if (dropdownValue != null) {
-                        var logined = await logininto(
-                            idController.text, passwardController.text);
+                        var logined = await () async {
+                          if (dropdownValue == User.student) {
+                            return await logininto(
+                                idController.text, passwardController.text);
+                          } else {
+                            return await adminlogininto(
+                                idController.text, passwardController.text);
+                          }
+                        }();
                         var login = jsonDecode(logined.body);
                         if (!mounted) return;
                         if (login["logined"] == true) {

@@ -112,19 +112,6 @@ class StudentPageState extends State<StudentPage> {
 
 typedef ClickCallback = void Function();
 
-//class HomePageButton extends StatefulWidget {
-//  const HomePageButton(
-//      {Key? key,
-//      required this.text,
-//      required this.date,
-//      required this.onPressed})
-//      : super(key: key);
-//  final String text;
-//  final String date;
-//  final ClickCallback onPressed;
-//  @override
-//  State<HomePageButton> createState() => _HomePageButtonState();
-//}
 class HomePageButton extends StatelessWidget {
   const HomePageButton(
       {Key? key,
@@ -164,54 +151,4 @@ class HomePageButton extends StatelessWidget {
     ]);
   }
 }
-//class _HomePageButtonState extends State<HomePageButton> {
-//  Color color = Colors.white;
-//  void _inchangeColor() {
-//    setState(() {
-//      if (color == Colors.white) {
-//        color = Colors.grey;
-//      } else {
-//        color = Colors.white;
-//      }
-//    });
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container(
-//      decoration: BoxDecoration(
-//        color: color,
-//        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-//        border: Border.all(width: 30, color: color),
-//      ),
-//      child: GestureDetector(
-//        onTapDown: (_infomation) {
-//          _inchangeColor();
-//        },
-//        onTapUp: (_infomation) {
-//          _inchangeColor();
-//          widget.onPressed();
-//        },
-//        onTapCancel: _inchangeColor,
-//        child: RichText(
-//          text: TextSpan(children: [
-//            TextSpan(
-//                text: widget.text + "\n\n\n",
-//                style: const TextStyle(
-//                  color: Colors.black,
-//                  fontSize: 21,
-//                  fontWeight: FontWeight.w700,
-//                )),
-//            TextSpan(
-//                text: widget.date,
-//                style: const TextStyle(
-//                  color: Colors.black,
-//                  fontSize: 14,
-//                  fontWeight: FontWeight.w400,
-//                )),
-//          ]),
-//        ),
-//      ),
-//    );
-//  }
-//}
+

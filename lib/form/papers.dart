@@ -183,6 +183,7 @@ class TextPaperState extends State<TextPaper> {
             child: Text(
               url,
               style: const TextStyle(
+                color: Colors.blue,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
@@ -299,7 +300,15 @@ class ImagePaperState extends State<ImagePaper> {
     //return Text(url);
     return Column(
       children: [
-        Image.network(url),
+				//const Image(
+				//	image: AssetImage('images/HIT.jpg'),
+				//	//fit: BoxFit.fill,
+				//),
+        //FittedBox(
+				//	fit:BoxFit.fitWidth,
+				//	child: Image.asset('images/HIT.jpg'),
+				//),
+				Image.network(url),
         const SizedBox(
           height: 20,
         ),
