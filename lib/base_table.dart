@@ -70,7 +70,7 @@ class _BaseTableState extends State<BaseTable> {
           textAlign: TextAlign.center,
         ),
       ),
-			// example show message
+      // example show message
       body: Center(
           child: Stack(children: [
         Container(

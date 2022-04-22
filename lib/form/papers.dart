@@ -300,15 +300,15 @@ class ImagePaperState extends State<ImagePaper> {
     //return Text(url);
     return Column(
       children: [
-				//const Image(
-				//	image: AssetImage('images/HIT.jpg'),
-				//	//fit: BoxFit.fill,
-				//),
+        //const Image(
+        //	image: AssetImage('images/HIT.jpg'),
+        //	//fit: BoxFit.fill,
+        //),
         //FittedBox(
-				//	fit:BoxFit.fitWidth,
-				//	child: Image.asset('images/HIT.jpg'),
-				//),
-				Image.network(url),
+        //	fit:BoxFit.fitWidth,
+        //	child: Image.asset('images/HIT.jpg'),
+        //),
+        Image.network(url),
         const SizedBox(
           height: 20,
         ),
