@@ -89,7 +89,7 @@ class VideoPaperState extends State<VideoPaper> {
                       ),
                       child: SizedBox(
                           height: 100,
-                          width: 600,
+                          width: 400,
                           child: TextButton(
                             style: TextButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -210,7 +210,7 @@ class TextPaperState extends State<TextPaper> {
                         ),
                         child: SizedBox(
                             height: 100,
-                            width: 600,
+                            width: 400,
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -331,7 +331,7 @@ class ImagePaperState extends State<ImagePaper> {
                         ),
                         child: SizedBox(
                             height: 100,
-                            width: 600,
+                            width: 400,
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(

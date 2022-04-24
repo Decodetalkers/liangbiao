@@ -56,6 +56,8 @@ Future<http.Response> registerinto(String name, String passward) {
 
 class _LoginPageState extends State<LoginPage> {
   //const LoginPage({Key? key}) : super(key: key);
+  String? loginfailed;
+  String? registerfailed;
   User? dropdownValue;
   Logintype? howlogin;
   String? passward;
@@ -77,6 +79,15 @@ class _LoginPageState extends State<LoginPage> {
           child: ListView(
             //  mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              loginfailed != null
+                  ? Center(
+                      child: Text(
+                      loginfailed!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                      ),
+                    ))
+                  : const SizedBox.shrink(),
               ExpansionTile(
                 title: () {
                   if (dropdownValue == null) {
@@ -200,6 +211,10 @@ class _LoginPageState extends State<LoginPage> {
                               Message(
                                   person: dropdownValue!,
                                   id: login["message"]["name"]));
+                        } else {
+                          setState(() {
+                            loginfailed = login["failed"];
+                          });
                         }
                       }
                     }
@@ -214,6 +229,15 @@ class _LoginPageState extends State<LoginPage> {
           child: ListView(
             //  mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              registerfailed != null
+                  ? Center(
+                      child: Text(
+                      registerfailed!,
+                      style: const TextStyle(
+                        color: Colors.red,
+                      ),
+                    ))
+                  : const SizedBox.shrink(),
               ExpansionTile(
                 title: () {
                   if (howlogin == null) {
@@ -327,7 +351,7 @@ class _LoginPageState extends State<LoginPage> {
                           subidController.text, subpasswardController.text);
                       var login = jsonDecode(logined.body);
                       if (login["logined"] == true) {
-                        showModalBottomSheet<void>(
+                        showModalBottomSheet<Message>(
                             context: context,
                             builder: (BuildContext context) {
                               return Container(
@@ -346,17 +370,20 @@ class _LoginPageState extends State<LoginPage> {
                                           child: const Text('登陸'),
                                           onPressed: () {
                                             //Navigator.pop(context);
-                                            Navigator.pop(
-                                                context,
-                                                Message(
-                                                    person: User.student,
-                                                    id: subidController.text));
+                                            Navigator.pop(context,
+                                            Message(
+                                                person: User.student,
+                                                id: subidController.text));
                                           }),
                                     ],
                                   ),
                                 ),
                               );
-                            });
+                            }).then((value) => Navigator.pop(context,value));
+                      } else {
+                        setState(() {
+                          registerfailed = login['failed'];
+                        });
                       }
 
                       // Close the screen and return "Yep!" as the result.
