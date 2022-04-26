@@ -370,16 +370,17 @@ class _LoginPageState extends State<LoginPage> {
                                           child: const Text('登陸'),
                                           onPressed: () {
                                             //Navigator.pop(context);
-                                            Navigator.pop(context,
-                                            Message(
-                                                person: User.student,
-                                                id: subidController.text));
+                                            Navigator.pop(
+                                                context,
+                                                Message(
+                                                    person: User.student,
+                                                    id: subidController.text));
                                           }),
                                     ],
                                   ),
                                 ),
                               );
-                            }).then((value) => Navigator.pop(context,value));
+                            }).then((value) => Navigator.pop(context, value));
                       } else {
                         setState(() {
                           registerfailed = login['failed'];

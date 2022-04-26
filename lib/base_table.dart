@@ -102,7 +102,7 @@ class _BaseTableState extends State<BaseTable> {
                   const SizedBox(
                     height: 150,
                   ),
-									const Image(image: AssetImage('images/scoreshow.png')),
+                  const Image(image: AssetImage('images/scoreshow.png')),
                   SizedBox(
                       width: 600,
                       height: 200,
