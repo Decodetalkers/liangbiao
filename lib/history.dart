@@ -97,7 +97,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
             output = Column(children: [
               Expanded(
-                  child: RadarChart.dark(
+                  child: RadarChart.light(
                 ticks: const [0, 20, 40, 60, 80, 100],
                 features: const ["a", "b", "c", "d"],
                 data: [scores],

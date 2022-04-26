@@ -68,6 +68,7 @@ flutter:
     - images/kanagawa.png
     - images/bubble.jpg
     - images/HIT.jpg
+    - images/scoreshow.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
