@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 import 'history.dart';
+import 'package:http/http.dart' as http;
+import './utils.dart';
+
+Future<http.Response> findhelp(String name) {
+  return http.post(
+    Uri.parse("$serveurl/findhelp"),
+    body: name,
+  );
+}
 
 class StudentPersonPage extends StatelessWidget {
   final String id;
@@ -70,6 +79,16 @@ class StudentPersonPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => HistoryPage(id: id)));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.six_mp),
+              title: const Text("Help"),
+              subtitle: const Text("#Help"),
+              onTap: () async {
+                //var succeed = await findhelp(id);
+                await findhelp(id);
+                //print(succeed);
               },
             )
           ],

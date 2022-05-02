@@ -2,9 +2,90 @@ import 'package:flutter/material.dart';
 import 'package:liangbiao/utils.dart';
 import 'http_get/get_menu.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'dart:convert';
+
+import 'history.dart';
+import 'package:http/http.dart' as http;
+
+Future<List<String>?> fetchHelps(String url) async {
+  var menuget = await http.get(Uri.parse(url));
+  if (menuget.statusCode == 200) {
+    var json = jsonDecode(menuget.body);
+    return (json as List).map((e) => e["id"].toString()).toList();
+  } else {
+    return null;
+  }
+}
 
 class TeacherPage extends StatelessWidget {
   const TeacherPage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<String>?>(
+        future: fetchHelps("$serveurl/gethelps"),
+        builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
+          if (snapshot.hasData) {
+            return ListView(
+              children: snapshot.data!
+                  .map((id) => ListTile(
+                        title: Text(
+                          id,
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HistoryPage(id: id)));
+                        },
+                      ))
+                  .toList(),
+            );
+            //return const Text("Beat");
+            //return const Text("test");
+          } else if (snapshot.hasError) {
+            List<Widget> children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children,
+              ),
+            );
+          } else {
+            List<Widget> children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              )
+            ];
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: children,
+              ),
+            );
+          }
+        });
+  }
+}
+
+class TeacherPageBak extends StatelessWidget {
+  const TeacherPageBak({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Historys>?>(
@@ -41,7 +122,7 @@ class TeacherPage extends StatelessWidget {
                 scores[i] = scores[i] / length[i];
               }
             }
-            return RadarChart.dark(
+            return RadarChart.light(
               ticks: const [0, 20, 40, 60, 80, 100],
               features: const ["a", "b", "c", "d"],
               data: [scores],

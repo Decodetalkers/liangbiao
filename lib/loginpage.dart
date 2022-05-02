@@ -26,9 +26,9 @@ Future<http.Response> logininto(String name, String passward) {
   );
 }
 
-Future<http.Response> adminlogininto(String name, String passward) {
+Future<http.Response> teacherlogininto(String name, String passward) {
   return http.post(
-    Uri.parse("$serveurl/adminlogin"),
+    Uri.parse("$serveurl/teacherlogin"),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       //'X-CUSTOM-HEADER': '123',
@@ -198,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                             return await logininto(
                                 idController.text, passwardController.text);
                           } else {
-                            return await adminlogininto(
+                            return await teacherlogininto(
                                 idController.text, passwardController.text);
                           }
                         }();
