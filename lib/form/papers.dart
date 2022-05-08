@@ -43,6 +43,10 @@ class VideoPaperState extends State<VideoPaper> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      const Image(
+        image: AssetImage('images/HIT.png'),
+        //fit: BoxFit.fill,
+      ),
       Stack(alignment: Alignment.bottomCenter, children: <Widget>[
         _controller.value.isInitialized
             ? AspectRatio(
@@ -174,16 +178,21 @@ class TextPaperState extends State<TextPaper> {
     //return Text(url);
     return Column(
       children: [
-        const SizedBox(
-          height: 100,
+        //const SizedBox(
+        //  height: 100,
+        //),
+        const Image(
+          image: AssetImage('images/HIT.png'),
+          //fit: BoxFit.fill,
         ),
         SizedBox(
             width: 600,
             height: 200,
             child: Text(
               url,
+              textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.blue,
+                color: Colors.black54,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
@@ -301,7 +310,7 @@ class ImagePaperState extends State<ImagePaper> {
     return Column(
       children: [
         const Image(
-          image: AssetImage('images/HIT.jpg'),
+          image: AssetImage('images/HIT.png'),
           //fit: BoxFit.fill,
         ),
         //FittedBox(

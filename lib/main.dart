@@ -109,7 +109,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _navigateAndDisplaySelection(BuildContext context) async {
+    void navigateAndDisplaySelection(BuildContext context) async {
       // Navigator.push returns a Future that completes after calling
       // Navigator.pop on the Selection Screen.
       final result = await Navigator.push(
@@ -222,7 +222,7 @@ class HomePageState extends State<HomePage> {
                                       child: const Text('登陆'),
                                       onPressed: () {
                                         Navigator.pop(context);
-                                        _navigateAndDisplaySelection(context);
+                                        navigateAndDisplaySelection(context);
                                       }),
                                 ],
                               ),
@@ -267,7 +267,7 @@ class HomePageState extends State<HomePage> {
                               child: const Text('登陆'),
                               onPressed: () {
                                 Navigator.pop(context);
-                                _navigateAndDisplaySelection(context);
+                                navigateAndDisplaySelection(context);
                               }),
                         ],
                       ),

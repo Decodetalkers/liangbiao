@@ -3,7 +3,7 @@ import 'form/papers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'utils.dart';
-import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
@@ -107,31 +107,36 @@ class _BaseTableState extends State<BaseTable> {
                       width: 600,
                       height: 200,
                       child: Text(
-                        "${score * 100 / (3 * length)}",
+                        (score * 100 / (3 * length)).toStringAsFixed(2),
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
                       )),
+                  const SizedBox(
+                      width: 600,
+                      height: 100,
+                      child: Text(
+                        "Duration",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                   Expanded(
-                      child: RadarChart.dark(
-                    ticks: const [7, 14, 21, 28, 35],
-                    features: const [
-                      "AA",
-                      "BB",
-                      "CC",
-                      "DD",
-                      "EE",
-                      "FF",
-                      "GG",
-                      "HH"
+                      child: charts.BarChart(
+                    [
+                      charts.Series<int, String>(
+                          id: "time",
+                          colorFn: (datanum, index) =>
+                              charts.MaterialPalette.blue.shadeDefault,
+                          domainFn: (datum, index) => index.toString(),
+                          measureFn: (datum, index) => datum,
+                          data: duration)
                     ],
-                    data: const [
-                      [10.0, 20, 28, 5, 16, 15, 17, 6],
-                      [14.5, 1, 4, 14, 23, 10, 6, 19]
-                    ],
-                    useSides: true,
-                    reverseAxis: true,
+                    animate: true,
                   ))
                 ])
               ],
