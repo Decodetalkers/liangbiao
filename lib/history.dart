@@ -4,6 +4,31 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'utils.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+
+class TimePage extends StatelessWidget {
+  final List<double> duration;
+  const TimePage({Key? key, required this.duration}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Duration"),
+        ),
+        body: charts.BarChart(
+          [
+            charts.Series<double, String>(
+                id: "time",
+                colorFn: (datanum, index) =>
+                    charts.MaterialPalette.blue.shadeDefault,
+                domainFn: (datum, index) => index.toString(),
+                measureFn: (datum, index) => datum,
+                data: duration)
+          ],
+          animate: true,
+        ));
+  }
+}
 
 class HistoryPage extends StatelessWidget {
   final String id;
@@ -23,13 +48,18 @@ class Score {
   final String id;
   final String tabletype;
   final double score;
+  final List<double> duration;
   Score({
     required this.id,
     required this.score,
     required this.tabletype,
+    required this.duration,
   });
-  factory Score.fromJson(dynamic json) =>
-      Score(id: json["id"], tabletype: json["tabletype"], score: json["score"]);
+  factory Score.fromJson(dynamic json) => Score(
+      id: json["id"],
+      tabletype: json["tabletype"],
+      score: json["score"],
+      duration: List<double>.from(json["duration"] as List));
 }
 
 Future<List<Score>> fetchhistory(String input) async {
@@ -110,6 +140,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           title: Text(e.id),
                           subtitle: Text(
                               "score = ${e.score}   tabletype = ${e.tabletype}"),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TimePage(
+                                        duration: e.duration,
+                                      )),
+                            );
+                          },
                         ))
                     .toList(),
               ))

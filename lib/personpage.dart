@@ -16,28 +16,30 @@ class StudentPersonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      Stack(
-        alignment: Alignment.center,
-        children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage('images/kanagawa.png'),
+      //Stack(
+      //  alignment: Alignment.center,
+      //  children: [
+      Container(
+          alignment: Alignment.center,
+          child: const CircleAvatar(
+            backgroundImage: AssetImage('images/student.png'),
             radius: 100,
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.black45,
-            ),
-            child: const Text(
-              'Mia B',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
+          )),
+      //    Container(
+      //      decoration: const BoxDecoration(
+      //        color: Colors.black45,
+      //      ),
+      //      child: const Text(
+      //        'Mia B',
+      //        style: TextStyle(
+      //          fontSize: 20,
+      //          fontWeight: FontWeight.bold,
+      //          color: Colors.white,
+      //        ),
+      //      ),
+      //    ),
+      //  ],
+      //),
       Card(
         child: Column(
           children: [
@@ -104,28 +106,30 @@ class TeacherPersonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      Stack(
-        alignment: Alignment.center,
-        children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage('images/test.png'),
+      //Stack(
+      //  alignment: Alignment.center,
+      //  children: [
+      Container(
+          alignment: Alignment.center,
+          child: const CircleAvatar(
+            backgroundImage: AssetImage('images/teacher.png'),
             radius: 100,
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.black45,
-            ),
-            child: const Text(
-              'Mia B',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
+          )),
+      //    Container(
+      //      decoration: const BoxDecoration(
+      //        color: Colors.black45,
+      //      ),
+      //      child: const Text(
+      //        'Mia B',
+      //        style: TextStyle(
+      //          fontSize: 20,
+      //          fontWeight: FontWeight.bold,
+      //          color: Colors.white,
+      //        ),
+      //      ),
+      //    ),
+      //  ],
+      //),
       Card(
         child: Column(
           children: [
