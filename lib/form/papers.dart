@@ -127,7 +127,10 @@ class VideoPaperState extends State<VideoPaper> {
                 ])))
             .values
             .toList(),
-      )
+      ),
+      const SizedBox(
+        height: 100,
+      ),
     ]);
   }
 }
@@ -185,14 +188,17 @@ class TextPaperState extends State<TextPaper> {
           image: AssetImage('images/HIT.png'),
           //fit: BoxFit.fill,
         ),
+        const SizedBox(
+          height: 50,
+        ),
         SizedBox(
-            width: 600,
+            width: 400,
             height: 200,
             child: Text(
               url,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.black54,
+                color: Colors.black,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
@@ -256,7 +262,10 @@ class TextPaperState extends State<TextPaper> {
                   ])))
               .values
               .toList(),
-        )
+        ),
+        const SizedBox(
+          height: 100,
+        ),
       ],
     );
   }
@@ -375,7 +384,10 @@ class ImagePaperState extends State<ImagePaper> {
                   ])))
               .values
               .toList(),
-        )
+        ),
+        const SizedBox(
+          height: 100,
+        ),
       ],
     );
   }

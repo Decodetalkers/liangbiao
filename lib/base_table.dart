@@ -181,7 +181,7 @@ class _BaseTableState extends State<BaseTable> {
             Navigator.pop(context);
           }
         },
-        tooltip: 'Increment',
+        tooltip: localpage < length ? 'Next' : 'Upload',
         child: localpage < length
             ? const Icon(Icons.arrow_right)
             : const Icon(Icons.arrow_upward),
