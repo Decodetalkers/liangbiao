@@ -4,29 +4,34 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'utils.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+import 'package:fl_chart/fl_chart.dart' as charts;
 
 class TimePage extends StatelessWidget {
   final List<double> duration;
   const TimePage({Key? key, required this.duration}) : super(key: key);
+  charts.BarChartGroupData generateGroupData(int x, double y) {
+    return charts.BarChartGroupData(
+      x: x,
+      barRods: [charts.BarChartRodData(toY: y)],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Duration"),
         ),
-        body: charts.BarChart(
-          [
-            charts.Series<double, String>(
-                id: "time",
-                colorFn: (datanum, index) =>
-                    charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (datum, index) => index.toString(),
-                measureFn: (datum, index) => datum,
-                data: duration)
-          ],
-          animate: true,
-        ));
+        body: Padding(
+            padding: const EdgeInsets.all(40),
+            child: charts.BarChart(charts.BarChartData(
+                barGroups: duration
+                    .asMap()
+                    .map((key, value) =>
+                        MapEntry(key, generateGroupData(key, value)))
+                    .values
+                    .toList()))));
   }
 }
 

@@ -3,7 +3,8 @@ import 'form/papers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'utils.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+//import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:fl_chart/fl_chart.dart';
 
 class PopTablePage extends StatelessWidget {
   final BaseTable table;
@@ -59,6 +60,13 @@ class _BaseTableState extends State<BaseTable> {
     length = inside.length;
   }
 
+  BarChartGroupData generateGroupData(int x, int y) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [BarChartRodData(toY: y.toDouble())],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
@@ -100,12 +108,12 @@ class _BaseTableState extends State<BaseTable> {
                   ),
                 Column(children: [
                   const SizedBox(
-                    height: 150,
+                    height: 50,
                   ),
                   const Image(image: AssetImage('images/scoreshow.png')),
                   SizedBox(
                       width: 600,
-                      height: 200,
+                      height: 50,
                       child: Text(
                         (score * 100 / (3 * length)).toStringAsFixed(2),
                         textAlign: TextAlign.center,
@@ -126,18 +134,15 @@ class _BaseTableState extends State<BaseTable> {
                         ),
                       )),
                   Expanded(
-                      child: charts.BarChart(
-                    [
-                      charts.Series<int, String>(
-                          id: "time",
-                          colorFn: (datanum, index) =>
-                              charts.MaterialPalette.blue.shadeDefault,
-                          domainFn: (datum, index) => index.toString(),
-                          measureFn: (datum, index) => datum,
-                          data: duration)
-                    ],
-                    animate: true,
-                  ))
+                      child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: BarChart(BarChartData(
+                              barGroups: duration
+                                  .asMap()
+                                  .map((key, value) => MapEntry(
+                                      key, generateGroupData(key, value)))
+                                  .values
+                                  .toList())))),
                 ])
               ],
             )),
