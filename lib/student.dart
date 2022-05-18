@@ -16,15 +16,59 @@ Future<String?> _fetchTxt(String url) async {
 }
 
 class StudentPage extends StatefulWidget {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
   final List<String> titles;
   final List<String> times;
   final String? id;
   const StudentPage(
-      {Key? key, required this.times, required this.titles, required this.id})
+      {Key? key,
+      required this.times,
+      required this.titles,
+      required this.id,
+      required this.refreshIndicatorKey})
       : super(key: key);
 
   @override
   StudentPageState createState() => StudentPageState();
+}
+
+class StudentMainPage extends StatelessWidget {
+  final String? id;
+  final List<String> titles;
+
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+  const StudentMainPage(
+      {Key? key,
+      required this.id,
+      required this.titles,
+      required this.refreshIndicatorKey})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<FoldTable>?>(
+        future: fetchFolds("$serveurl/folds"),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<FoldTable>?> snapshot) {
+          if (snapshot.hasData) {
+            List<String> times = [];
+            if (snapshot.data != null) {
+              times = snapshot.data!.map((e) => e.id).toList();
+            }
+            //return const Text("Beat");
+            return StudentPage(
+              times: times,
+              titles: titles,
+              id: id,
+              refreshIndicatorKey: refreshIndicatorKey,
+            );
+          } else {
+            return const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text('Awaiting result...'),
+            );
+          }
+        });
+  }
 }
 
 class StudentPageState extends State<StudentPage> {
@@ -55,6 +99,7 @@ class StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      key: widget.refreshIndicatorKey,
       onRefresh: _handrefresh,
       child: ListView(
           children: zip([titles, times])

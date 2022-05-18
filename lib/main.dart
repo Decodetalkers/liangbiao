@@ -42,6 +42,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   late List<String> titles;
   //late List<String> times;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   int _index = 0;
   // This is the page of the first page, If you are a student , It will be the first one, else, second one
   late List<Widget?> mainpages;
@@ -65,7 +67,12 @@ class HomePageState extends State<HomePage> {
               times = snapshot.data!.map((e) => e.id).toList();
             }
             //return const Text("Beat");
-            return StudentPage(times: times, titles: titles, id: null);
+            return StudentPage(
+              times: times,
+              titles: titles,
+              id: null,
+              refreshIndicatorKey: _refreshIndicatorKey,
+            );
           } else if (snapshot.hasError) {
             List<Widget> children = <Widget>[
               const Icon(
@@ -124,33 +131,17 @@ class HomePageState extends State<HomePage> {
           if (result.person == User.student) {
             _mainpageindex = 0;
             loginer = User.student;
-            mainpages[1] = StudentPersonPage(id: result.id);
+						mainpages[0] = StudentMainPage(id: result.id, titles: titles, refreshIndicatorKey: _refreshIndicatorKey);            //mainpages[1] = StudentPersonPage(id: result.id);
             personpage = StudentPersonPage(id: result.id);
           } else {
             _mainpageindex = 1;
             loginer = User.teacher;
-            mainpages[1] = const TeacherPage();
+            mainpages[1] =
+                TeacherPage(refreshIndicatorKey: _refreshIndicatorKey);
             personpage = TeacherPersonPage(id: result.id);
           }
         });
-        mainpages[0] = FutureBuilder<List<FoldTable>?>(
-            future: fetchFolds("$serveurl/folds"),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<FoldTable>?> snapshot) {
-              if (snapshot.hasData) {
-                List<String> times = [];
-                if (snapshot.data != null) {
-                  times = snapshot.data!.map((e) => e.id).toList();
-                }
-                //return const Text("Beat");
-                return StudentPage(times: times, titles: titles, id: result.id);
-              } else {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text('Awaiting result...'),
-                );
-              }
-            });
+
       }
     }
 
@@ -277,6 +268,16 @@ class HomePageState extends State<HomePage> {
           }
         },
       ),
+      floatingActionButton: _index == 0
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                // Show refresh indicator programmatically on button tap.
+                _refreshIndicatorKey.currentState?.show();
+              },
+              icon: const Icon(Icons.refresh),
+              label: const Text('Refresh'),
+            )
+          : null,
     );
   }
 }

@@ -25,8 +25,9 @@ Future<List<String>?> fetchHelps(String url) async {
 }
 
 class TeacherFlashPage extends StatefulWidget {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
   final List<String> forhelpers;
-  const TeacherFlashPage({Key? key, required this.forhelpers})
+  const TeacherFlashPage({Key? key, required this.forhelpers,required this.refreshIndicatorKey})
       : super(key: key);
   @override
   TeacherFlashPageState createState() => TeacherFlashPageState();
@@ -43,6 +44,7 @@ class TeacherFlashPageState extends State<TeacherFlashPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+				key: widget.refreshIndicatorKey,
         onRefresh: () async {
           var newhelpers = await fetchHelps("$serveurl/gethelps");
           if (newhelpers != null) {
@@ -100,7 +102,9 @@ class TeacherFlashPageState extends State<TeacherFlashPage> {
 }
 
 class TeacherPage extends StatelessWidget {
-  const TeacherPage({Key? key}) : super(key: key);
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+
+  const TeacherPage({Key? key,required this.refreshIndicatorKey}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<String>?>(
@@ -108,7 +112,9 @@ class TeacherPage extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<List<String>?> snapshot) {
           if (snapshot.hasData) {
             return TeacherFlashPage(
-                forhelpers: snapshot.data!); //return const Text("Beat");
+                forhelpers: snapshot.data!,
+								refreshIndicatorKey:refreshIndicatorKey
+								); //return const Text("Beat");
             //return const Text("test");
           } else if (snapshot.hasError) {
             List<Widget> children = <Widget>[
