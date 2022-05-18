@@ -8,12 +8,12 @@ import 'utils.dart';
 import 'package:fl_chart/fl_chart.dart' as charts;
 
 class TimePage extends StatelessWidget {
-  final List<double> duration;
+  final List<int> duration;
   const TimePage({Key? key, required this.duration}) : super(key: key);
-  charts.BarChartGroupData generateGroupData(int x, double y) {
+  charts.BarChartGroupData generateGroupData(int x, int y) {
     return charts.BarChartGroupData(
       x: x,
-      barRods: [charts.BarChartRodData(toY: y)],
+      barRods: [charts.BarChartRodData(toY: y.toDouble())],
     );
   }
 
@@ -53,7 +53,7 @@ class Score {
   final String id;
   final String tabletype;
   final double score;
-  final List<double> duration;
+  final List<int> duration;
   Score({
     required this.id,
     required this.score,
@@ -64,7 +64,7 @@ class Score {
       id: json["id"],
       tabletype: json["tabletype"],
       score: json["score"],
-      duration: List<double>.from(json["duration"] as List));
+      duration: List<int>.from(json["duration"] as List));
 }
 
 Future<List<Score>> fetchhistory(String input) async {
